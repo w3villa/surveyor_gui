@@ -96,7 +96,7 @@ class SurveyorGui::DependencysController < ApplicationController
     dependency_condition      = dependency_condition_id.blank? ? nil : DependencyCondition.find(dependency_condition_id)
     question = Question.find(question_id)
     if question && question.question_group
-      question.question_group.columns.each_with_index do |c, index|
+      question.question_group.group_columns.each_with_index do |c, index|
         options += '<option ' +
          _get_selected_column(index, dependency_condition, c) +
          'value="' + c.id.to_s + '"' +
@@ -162,7 +162,7 @@ private
   
   def _default_column_id(question)
     if question.part_of_group?
-      columns = question.question_group.columns
+      columns = question.question_group.group_columns
       columns.first ? columns.first.id.to_s : ""
     else
       ""

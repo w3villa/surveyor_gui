@@ -140,13 +140,13 @@ class SurveyorGui::QuestionsController < ApplicationController
       @question_group=@questions.question_group
     else
       @question_group=QuestionGroup.new
-      @question_group.columns.build
+      @question_group.group_columns.build
     end
-    column_count = @question_group.columns.size
+    column_count = @question_group.group_columns.size
     requested_columns = params[:index] == "NaN" ? column_count : params[:index].to_i
     if requested_columns >= column_count
       requested_columns = requested_columns - column_count
-      (requested_columns).times.each {@question_group.columns.build}
+      (requested_columns).times.each {@question_group.group_columns.build}
     else
       @question_group.trim_columns (column_count-requested_columns)
     end

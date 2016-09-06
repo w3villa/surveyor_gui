@@ -58,7 +58,7 @@ module SurveyorGui
     
     def question_group_heading(f)
       if f.object.question_type_id == :grid_dropdown
-        heading = f.object.question_group.columns
+        heading = f.object.question_group.group_columns
       elsif f.object.question_group.display_type == "grid"
         heading = f.object.answers
       else
@@ -141,7 +141,7 @@ module SurveyorGui
                   dependency_conditions: [:question, :answer]
                 }
               },
-              {question_group: :columns}
+              {question_group: :group_columns}
             ]
           }
       }, 

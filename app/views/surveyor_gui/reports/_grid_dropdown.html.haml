@@ -7,7 +7,7 @@
     %td &nbsp;
     %td User Id
     %td 
-    - question_group.columns.each do |column|
+    - question_group.group_columns.each do |column|
       %td
         = column.text
     - @response_sets.each do |response_set| 
@@ -20,7 +20,7 @@
               = response_set.report_user_name
           %td
             = question.text
-          - question_group.columns.each do |column|
+          - question_group.group_columns.each do |column|
             %td
               -if (response = Response.where(response_set_id: response_set.id, question_id: question.id, column_id: column.id).first)
                 = response.answer.text
@@ -32,14 +32,14 @@
     %td &nbsp;
     %td{:style => "font-weight:bold;"}
       &nbsp;
-    - question_group.columns.each do |column|
+    - question_group.group_columns.each do |column|
       %td{style: "font-weight:bold; text-align: center;", colspan: "#{column.answers.count/question_group.questions.count}"}
         = column.text
   %tr
     %td &nbsp;
     %td &nbsp;
     %td
-    - question_group.columns.each do |column|
+    - question_group.group_columns.each do |column|
       - column.answers.map{|a| a.text}.uniq.each do |answer|
         %td
           = answer
@@ -49,7 +49,7 @@
       %td &nbsp;
       %td
         = q.text
-      - question_group.columns.each do |column| 
+      - question_group.group_columns.each do |column|
         - Answer.where(question_id: q.id, column_id: column.id).each do |a|
           %td.table_number
             = @responses.where(question_id: q.id, column_id: column.id, answer_id: a.id).count

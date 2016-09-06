@@ -10,7 +10,7 @@
     Columns: <span class="grid_textbox_hint">Columns: enter the choices for each column option on a separate line under "Column Options"</span><br/>
     <div class="grid_dropdown_columns">
       <span class="spacer">&nbsp;</span>
-      <%= qg.simple_fields_for :columns do |c| %>
+      <%= qg.simple_fields_for :group_columns do |c| %>
           <%= render "grid_dropdown_columns", c: c %>
       <% end -%>
     </div>

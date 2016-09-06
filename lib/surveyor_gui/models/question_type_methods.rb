@@ -168,7 +168,7 @@ module SurveyorGui
       def _cleanup_orphan_grid_dropdown_answers(question)
         if question.question_group
           question.question_group.questions.map{|q| q.answers.where('column_id IS NOT NULL').map{|a| a.destroy}}
-          question.question_group.columns.map{|c| c.destroy}
+          question.question_group.group_columns.map{|c| c.destroy}
         end
       end
 
@@ -189,7 +189,7 @@ module SurveyorGui
           other,                other_text,
           is_comment,           comments_text
         )
-        question.question_group.columns.each do |column|
+        question.question_group.group_columns.each do |column|
           _process_grid_answers(
             question,
             column.answers_textbox,

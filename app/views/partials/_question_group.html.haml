@@ -8,12 +8,12 @@
           %li
             %table
               %col.pre
-                - g.columns.each do |column|
+                - g.group_columns.each do |column|
                   %col{:class => cycle("odd", "even")}
               %col.pre
               %col.post
               %tbody
-                - g.columns.each_slice(10) do |ten_columns| 
+                - g.group_columns.each_slice(10) do |ten_columns|
                   %tr
                     %th &nbsp;
                     - ten_columns.each do |column|

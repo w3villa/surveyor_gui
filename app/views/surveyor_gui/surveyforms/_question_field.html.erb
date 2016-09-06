@@ -12,7 +12,7 @@
       <!-- Look in application.js for the hook - it selects all input select elements with "uislider" as the class -->
       <%= f.input :dummy_answer, :collection => f.object.answers.map{|a| a.text}, :as => :select, :label => false,
                   :input_html => {:class => "uislider"}, :include_blank => false, :wrapper_html=>{:class => 'shrink_slider'} %>
-      </slider>
+      </div>
   <% when :stars -%>
     <%= f.input :dummy_answer, label: false, :collection => [[nil,1],[nil,2],[nil,3],[nil,4],[nil,5]],
                 :as => :radio_buttons, :input_html=>{:class=>'star'}, :wrapper_html=>{:class=>'star'} %>
@@ -51,7 +51,7 @@
 
 
   <% when :grid_dropdown -%>
-    <% f.object.question_group.columns.each do |column|  %>
+    <% f.object.question_group.group_columns.each do |column|  %>
       <%= f.input :dummy_answer, label: false,
                   :collection => f.object.answers.where('column_id=?',column.id).collect(&:text),
                   :as => :select, :wrapper_html=>{:class=>'grid_dropdown_cell'} %>

@@ -326,7 +326,7 @@ module SurveyorGui
       end
 
       def dropdown_column_count
-        @dropdown_column_count = @dropdown_column_count || (self.question_group ? self.question_group.columns.size : 1)
+        @dropdown_column_count = @dropdown_column_count || (self.question_group ? self.question_group.group_columns.size : 1)
       end
 
       def grid_columns_textbox

@@ -134,7 +134,7 @@ class ReportResponseGenerator
 
   def grid_dropdown(response, response_set, q)
     q.question_group.questions.is_not_comment.each do |question|
-      q.question_group.columns.each do |column|
+      q.question_group.group_columns.each do |column|
         response = response_set.responses.build(question_id: q.id, answer_id: random_pick_with_column(question, column), column_id: column.id )
         response.save
       end

@@ -187,7 +187,7 @@ responses.string_value')
     @chart[q.id.to_s] = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:chart][:defaultSeriesType] = 'column'
       f.options[:title][:text] = q.text
-      f.options[:xAxis][:categories] = q.question_group.columns.map{|c| c.text}
+      f.options[:xAxis][:categories] = q.question_group.group_columns.map{|c| c.text}
       f.options[:xAxis][:labels] = {:rotation=> -45, :align => 'right'}
       f.options[:yAxis][:min] = 0
       f.options[:yAxis][:title] = {:text => 'Count'}
@@ -212,7 +212,7 @@ responses.string_value')
       )
 
       series = []
-      q.question_group.columns.each_with_index do |column, column_index|
+      q.question_group.group_columns.each_with_index do |column, column_index|
         q.answers.where(column_id: column.id).each_with_index do |answer, answer_index|
           response_count = Response.where(question_id: q.id, answer_id: answer.id, column_id: column.id).count
           series<<{column_id: column.id, answer_id: answer.id, name: answer.text, y: response_count.to_i}
@@ -220,7 +220,7 @@ responses.string_value')
       end
       series.map{|a| a[:name]}.uniq.each_with_index do |answer_name, answer_index|
         bararray=[]
-        q.question_group.columns.each do |column|
+        q.question_group.group_columns.each do |column|
           match = series.select{|s| s[:name]==answer_name && s[:column_id]==column.id}.first
           bararray << (match ? match[:y] : 0) 
         end

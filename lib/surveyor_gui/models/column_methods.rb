@@ -30,7 +30,7 @@ module SurveyorGui
       end
       def translation(locale)
         {:text => self.text, :help_text => self.help_text}.with_indifferent_access.merge(
-          (self.question_group.questions.first.survey_section.translation(locale)[:columns] || {})[self.reference_identifier] || {}
+          (self.question_group.questions.first.survey_section.translation(locale)[:group_columns] || {})[self.reference_identifier] || {}
         )
       end
       def help_text
