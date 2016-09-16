@@ -71,10 +71,10 @@ PermittedParams.class_eval do
     dependency_attributes: dependency_attributes,questions_attributes: question_attributes]
   end
   # column
-  def column
+  def group_column
     strong_parameters.permit(*column_attributes)
   end
-  def column_attributes
+  def group_column_attributes
     [:id, :text, :question_group_id, :answers_textbox]
   end
 end
