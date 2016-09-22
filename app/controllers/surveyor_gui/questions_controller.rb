@@ -59,7 +59,15 @@ class SurveyorGui::QuestionsController < ApplicationController
   def update
     @title = "Update Question"
     @question = Question.includes(:answers).find(params[:id])
-    if @question.update_attributes(question_params)
+    qparams = question_params
+    if qparams.andand['question_group_attributes'].andand['group_columns_attributes'].present?
+      qparams['question_group_attributes']['group_columns_attributes'].each do |key, value|
+        if value['choices_key'].present?
+          value['answers_textbox'] = AnimusXSurvey.current_survey.selector_values(value['choices_key'])
+        end
+      end
+    end
+    if @question.update_attributes(qparams)
       @question.answers.each_with_index {|a, index| a.destroy if index > 0} if @question.pick == 'none'
       #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
       render :blank, :layout => 'surveyor_gui/surveyor_gui_blank'

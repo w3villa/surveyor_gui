@@ -3,6 +3,8 @@
 <div class="column-box">
   <h3>Column #<%= 1 + c.index %> heading</h3>
   <%=  c.input :text, as: :string, label: false, placeholder: "column #{1+c.index}"  %><br/>
+  <h3>Column #<%= 1 + c.index %> choices key</h3>
+  <%= c.select :choices_key, options_for_select(["", "DAX", "EUR_BUND", "EUR_USD"])  %><br/>
   <h3>Column #<%=1 + c.index %> choices</h3><br/>
   <%=  c.input  :answers_textbox, :as => :text, 
                 :wrapper_html => {:class=>'answers_collection'}, :label => false %>

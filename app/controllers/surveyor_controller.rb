@@ -17,7 +17,7 @@ module SurveyorControllerCustomMethods
     if saved && params[:finish] && !@response_set.mandatory_questions_complete?
       #did not complete mandatory fields
       ids, remove, question_ids, flashmsg = {}, {}, [], []
-      flashmsg << "You must complete all required fields before submitting the survey.  Please fill in the following:"
+      flashmsg << t('surveyor.fill_in_mandatory')
 
       triggered_mandatory_missing = @response_set.triggered_mandatory_missing
 
