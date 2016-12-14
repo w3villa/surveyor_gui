@@ -8,8 +8,8 @@ module SurveyorGui
         base.send :attr_accessible, :questions_attributes if
                   defined? ActiveModel::MassAssignmentSecurity
         base.send :accepts_nested_attributes_for, :questions, :allow_destroy => true
-        base.send :has_many, :group_columns, class_name: "Column", :order => :created_at
-        base.send :accepts_nested_attributes_for, :group_columns,  :allow_destroy => true
+        base.send :has_many, :group_columns, -> { order "created_at" }, class_name: "Column"
+            base.send :accepts_nested_attributes_for, :group_columns,  :allow_destroy => true
         base.send :accepts_nested_attributes_for, :dependency, :reject_if => lambda { |d| d[:rule].blank?}, :allow_destroy => true
       end
 
