@@ -31,7 +31,7 @@
                             = f.semantic_fields_for i, r do |ff|
                               = ff.input :question_id, :as => :quiet
                               = ff.input :api_id, :as => :quiet 
-                              = ff.input :column_id, :value => column.id, :as => :quiet
+                              = ff.input :column_id, input_html: {:value => column.id}, :as => :quiet
                               = ff.input :answer_id, :as => :select, :collection => q.answers.where('column_id=?',column.id).map{|a| [a.text, a.id]}, :label => false, input_html: {:class => "select no-touch"}, :response_class => "answer"
         - else
           %li
