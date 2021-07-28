@@ -1,6 +1,6 @@
 PermittedParams.class_eval do
   def group_column
-    strong_parameters.permit(*column_attributes)
+    strong_parameters.permit(*group_column_attributes)
   end
   def group_column_attributes
     [:id, :text, :question_group_id, :answers_textbox, :choices_key]
