@@ -8,10 +8,22 @@
   = ff.input :api_id, :as => :quiet unless q.pick == "one"
   = ff.input :response_group, :input_html => { :value => rg }, :as => :quiet if q.pick != "one" && g && g.display_type == "repeater"
   - case q.pick
-  - when "one"
-    = ff.input :answer_id, :as => :surveyor_radio, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class
+  - when "one" #TODO test direct link to gems
+    = ff.input :answer_id, :as => :surveyor_radio, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class + " radio-button-input", :disabled => disabled}, :response_class => a.response_class
+    %label.answer-label.radio-button-label.no-touch.touch-sensitive.clearfix{:"data-sm-radio-button-label" => "", for:"r_#{i}_answer_id_#{a.id}"}
+      %span.radio-button-display
+      %span.radio-button-label-text.question-body-font-theme.user-generated
+        %span.smusr_radio-row-text
+          = q.text_for(:pre, @render_context, I18n.locale)
+        = a.text_for(nil, @render_context, I18n.locale)
   - when "any"
     = ff.input :answer_id, :as => :surveyor_check_boxes, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class
+    %label.answer-label.checkbox-button-label.no-touch.touch-sensitive.clearfix{:"data-sm-checkbox-button-label" => "", for:"r_#{i}_answer_id_#{a.id}"}
+      %span.checkbox-button-display
+      %span.checkbox-button-label-text.question-body-font-theme.user-generated
+        %span.smusr_checkbox-row-text
+          = q.text_for(:pre, @render_context, I18n.locale)
+        = a.text_for(nil, @render_context, I18n.locale)
   - when "none"
     - if %w(date datetime time float integer string text).include? a.response_class
       = ff.input :answer_id, :as => :quiet, :input_html => {:class => a.css_class, :value => a.id}
