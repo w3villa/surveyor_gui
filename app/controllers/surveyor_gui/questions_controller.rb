@@ -1,12 +1,10 @@
 class SurveyorGui::QuestionsController < ApplicationController
-  # layout 'surveyor_gui/surveyor_gui_blank'
-
-  layout 'surveyor_gui/surveyor_gui_default'
+  layout 'surveyor_gui/surveyor_gui_blank'
 
   def new
     @title = "Add Question"
-    @survey_section = SurveySection.find(params[:survey_section_id])
-    @survey = Survey.find(@survey_section.survey_id)
+    survey_section = SurveySection.find(params[:survey_section_id])
+    survey = Survey.find(survey_section.survey_id)
     @question_group = QuestionGroup.new
     if params[:prev_question_id]
       prev_question_display_order = _get_prev_display_order(params[:prev_question_id])
@@ -22,95 +20,79 @@ class SurveyorGui::QuestionsController < ApplicationController
     end
     @question.question_type_id = params[:question_type_id] if !params[:question_type_id].blank?
     @question.answers.build(:text => '', :response_class=>"string")
-
-    render "new", locals: { question: @question }
   end
 
   def edit
     @title = "Edit Question"
     @question = Question.includes(:answers).find(params[:id])
-    @survey_section = @question.survey_section
-    @survey = @survey_section.survey
-
     @question.question_type_id = params[:question_type_id] if !params[:question_type_id].blank?
-
-    render "new", locals: { question: @question }
   end
 
-  # def adjusted_text
-  #   if @question.part_of_group?
-  #     @question.question_group.text
-  #   else
-  #     @question.text
-  #   end
-  # end
-  #
-  # helper_method :adjusted_text
+  def adjusted_text
+    if @question.part_of_group?
+      @question.question_group.text
+    else
+      @question.text
+    end
+  end
+
+  helper_method :adjusted_text
 
   def create
-
-    Question.transaction do
-      Question.where(:survey_section_id => params[:question][:survey_section_id])
-          .where("display_order >= ?", params[:question][:display_order])
-          .update_all("display_order = display_order+1")
-      if !params[:question][:answers_attributes].blank? && !params[:question][:answers_attributes]['0'].blank?
-        params[:question][:answers_attributes]['0'][:original_choice] = params[:question][:answers_attributes]['0'][:text]
-      end
-      @question = Question.new(question_params)
-      if @question.save
-        @question.answers.each_with_index {|a, index| a.destroy if index > 0} if @question.pick == 'none'
-        #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
-        # render :inline => '<div id="cboxQuestionId">'+@question.id.to_s+'</div>', :layout => 'surveyor_gui/surveyor_gui_blank'
-
-        redirect_to surveyor_gui.edit_surveyform_url(@question.survey_section.survey)
-
-      else
-        @title = "Add Question"
-        @survey_section = @question.survey_section
-        @survey = Survey.find(@survey_section.survey_id)
-
-        handle_errors
-
-        render "new", locals: { question: @question }
-      end
+    Question.where(:survey_section_id => params[:question][:survey_section_id])
+            .where("display_order >= ?", params[:question][:display_order])
+            .update_all("display_order = display_order+1")
+    if !params[:question][:answers_attributes].blank? && !params[:question][:answers_attributes]['0'].blank?
+      params[:question][:answers_attributes]['0'][:original_choice] = params[:question][:answers_attributes]['0'][:text]
     end
-
+    @question = Question.new(question_params)
+    if @question.save
+      @question.answers.each_with_index {|a, index| a.destroy if index > 0} if @question.pick == 'none'
+      #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
+      render :inline => '<div id="cboxQuestionId">'+@question.id.to_s+'</div>', :layout => 'surveyor_gui/surveyor_gui_blank'
+    else
+      @title = "Add Question"
+      render :action => 'new', :layout => 'surveyor_gui/surveyor_gui_blank'
+    end
   end
 
   def update
     @title = "Update Question"
-    @question = Question.includes(:answers).find(question_params[:id])
-    if @question.update_attributes(question_params)
+    @question = Question.includes(:answers).find(params[:id])
+    qparams = question_params
+    if qparams.andand['question_group_attributes'].andand['group_columns_attributes'].present?
+      qparams['question_group_attributes']['group_columns_attributes'].each do |key, value|
+        if value['choices_key'].present?
+          value['answers_textbox'] = AnimusXSurvey.current_survey.selector_values(value['choices_key'])
+        end
+      end
+    end
+    if @question.update_attributes(qparams)
       @question.answers.each_with_index {|a, index| a.destroy if index > 0} if @question.pick == 'none'
-
       #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
-      redirect_to surveyor_gui.edit_surveyform_url(@question.survey_section.survey)
+      render :blank, :layout => 'surveyor_gui/surveyor_gui_blank'
     else
-      @survey_section = @question.survey_section
-      @survey = Survey.find(@survey_section.survey_id)
-
-      handle_errors
-      render "new", locals: { question: @question }
+      render :action => 'edit', :layout => 'surveyor_gui/surveyor_gui_blank'
     end
   end
 
   def destroy
     question = Question.find(params[:id])
-    # if !question.survey_section.survey.template && question.survey_section.survey.response_sets.count > 0
-    #   flash[:error]="Responses have already been collected for this survey, therefore it cannot be modified. Please create a new survey instead."
-    #   return false
-    # end
-    if question.dependent_questions.any?
-      render :plain=> dependent_delete_failure_message(question)
+    if !question.survey_section.survey.template && question.survey_section.survey.response_sets.count > 0
+      flash[:error]="Reponses have already been collected for this survey, therefore it cannot be modified. Please create a new survey instead."
+      return false
+    end
+    if !question.dependency_conditions.blank?
+      render :text=>"The following questions have logic that depend on this question: \n\n"+question.dependency_conditions.map{|d| " - "+d.dependency.question.text}.join('\n')+"\n\nPlease delete logic before deleting this question.".html_safe
       return
     end
     if question.part_of_group?
       question.question_group.questions.each{|q| q.destroy}
-      render :plain=>''
+      render :text=>''
       return
     end
     question.destroy
-    render :plain=>''
+    render :text=>''
   end
 
   def sort
@@ -124,7 +106,7 @@ class SurveyorGui::QuestionsController < ApplicationController
     if q=Question.find(params[:id])
       q.update_attribute(:survey_section_id,nil)
     end
-    redirect_back(fallback_location: surveyor_gui.surveyforms_path)
+    redirect_to :back
   end
 
   def render_answer_fields_partial
@@ -166,13 +148,13 @@ class SurveyorGui::QuestionsController < ApplicationController
       @question_group=@questions.question_group
     else
       @question_group=QuestionGroup.new
-      @question_group.columns.build
+      @question_group.group_columns.build
     end
-    column_count = @question_group.columns.size
+    column_count = @question_group.group_columns.size
     requested_columns = params[:index] == "NaN" ? column_count : params[:index].to_i
     if requested_columns >= column_count
       requested_columns = requested_columns - column_count
-      (requested_columns).times.each {@question_group.columns.build}
+      (requested_columns).times.each {@question_group.group_columns.build}
     else
       @question_group.trim_columns (column_count-requested_columns)
     end
@@ -202,13 +184,6 @@ class SurveyorGui::QuestionsController < ApplicationController
     ::PermittedParams.new(params[:question]).question
   end
 
-  def handle_errors
-    if @question.part_of_group?
-      @question.errors.clear
-      @question.errors.add(:base, "Please be sure you have filled in all required fields.")
-    end
-  end
-
   def _get_prev_display_order(prev_question)
     prev_question = Question.find(prev_question)
     if prev_question.part_of_group?
@@ -216,15 +191,5 @@ class SurveyorGui::QuestionsController < ApplicationController
     else
       prev_question.display_order + 1
     end
-  end
-
-  def dependent_delete_failure_message(question)
-
-    questions = question.dependent_questions.map do |d|
-      question = d.dependency.question||d.dependency.question_group
-      " - #{ActionController::Base.helpers.strip_tags(question.text)}"
-    end.join('\n')
-
-    "The following questions have logic that depend on this question: \n\n"+ questions +"\n\nPlease delete logic before deleting this question.".html_safe
   end
 end

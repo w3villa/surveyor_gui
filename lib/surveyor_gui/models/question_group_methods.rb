@@ -8,9 +8,8 @@ module SurveyorGui
         base.send :attr_accessible, :questions_attributes if
             defined? ActiveModel::MassAssignmentSecurity
         base.send :accepts_nested_attributes_for, :questions, :allow_destroy => true
-        base.send :has_many, :columns
-        base.send :has_one, :dependency, dependent: :destroy
-        base.send :accepts_nested_attributes_for, :columns,  :allow_destroy => true
+        base.send :has_many, :group_columns, -> { order "created_at" }, class_name: "Column"
+            base.send :accepts_nested_attributes_for, :group_columns,  :allow_destroy => true
         base.send :accepts_nested_attributes_for, :dependency, :reject_if => lambda { |d| d[:rule].blank?}, :allow_destroy => true
       end
 
@@ -42,7 +41,7 @@ module SurveyorGui
       end
 
       def trim_columns(qty_to_trim)
-        columns = self.columns.order('id ASC')
+        columns = self.group_columns.order('id ASC')
         columns.last(qty_to_trim).map{|c| c.destroy}
       end
 

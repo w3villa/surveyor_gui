@@ -51,7 +51,7 @@
 
 
   <% when :grid_dropdown -%>
-    <% f.object.question_group.columns.each do |column|  %>
+    <% f.object.question_group.group_columns.each do |column|  %>
       <%= f.input :dummy_answer, label: false,
                   :collection => f.object.answers.where('column_id=?',column.id).collect(&:text),
                   :as => :select, :wrapper_html=>{:class=>'grid_dropdown_cell'} %>

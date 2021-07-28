@@ -2,7 +2,7 @@
   %td &nbsp;
   %td &nbsp;
   %td 
-  - question_group.columns.each do |column|
+  - question_group.group_columns.each do |column|
     %td
       = column.text
   - question_group.questions.is_not_comment.each_with_index do |question, index|
@@ -11,7 +11,7 @@
       %td &nbsp;
       %td
         = question.text
-      - question_group.columns.each do |column|
+      - question_group.group_columns.each do |column|
         %td
           -if (response = Response.where(response_set_id: @response_set.id, question_id: question.id, column_id: column.id).first)
             = response.answer.text

@@ -10,7 +10,7 @@ module SurveyorGui
       included do
         belongs_to :question_group
         has_many :answers
-        attr_accessible *PermittedParams.new.column_attributes if defined? ActiveModel::MassAssignmentSecurity
+        attr_accessible *PermittedParams.new.group_column_attributes if defined? ActiveModel::MassAssignmentSecurity
       end
       def text_for(position = nil, context = nil, locale = nil)
       split(in_context(translation(locale)[:text], context), position)
@@ -30,7 +30,7 @@ module SurveyorGui
       end
       def translation(locale)
         {:text => self.text, :help_text => self.help_text}.with_indifferent_access.merge(
-          (self.question_group.questions.first.survey_section.translation(locale)[:columns] || {})[self.reference_identifier] || {}
+          (self.question_group.questions.first.survey_section.translation(locale)[:group_columns] || {})[self.reference_identifier] || {}
         )
       end
       def help_text

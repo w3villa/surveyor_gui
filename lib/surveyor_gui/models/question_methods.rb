@@ -11,7 +11,7 @@ module SurveyorGui
         base.send :attr_accessible, :dummy_answer, :dummy_answer_array, :question_type, :question_type_id, :survey_section_id, :question_group_id,
                   :text, :pick, :reference_identifier, :display_order, :display_type,
                   :is_mandatory,  :prefix, :suffix, :answers_attributes, :decimals, :dependency_attributes,
-                  :hide_label, :dummy_blob, :dynamically_generate, :answers_textbox, :dropdown_column_count,
+                  :hide_label, :dummy_blob, :dynamically_generate, :answers_textbox, :choices_key, :dropdown_column_count,
                   :grid_columns_textbox, :grid_rows_textbox, :omit_text, :omit, :other, :other_text, :is_comment, :comments, :comments_text,
                   :dynamic_source, :modifiable, :report_code, :question_group_attributes if
             defined? ActiveModel::MassAssignmentSecurity
@@ -346,7 +346,7 @@ module SurveyorGui
       end
 
       def dropdown_column_count
-        @dropdown_column_count = @dropdown_column_count || (self.question_group ? self.question_group.columns.size : 1)
+        @dropdown_column_count = @dropdown_column_count || (self.question_group ? self.question_group.group_columns.size : 1)
       end
 
       def grid_columns_textbox

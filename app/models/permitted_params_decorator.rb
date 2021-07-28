@@ -1,9 +1,9 @@
 PermittedParams.class_eval do
-  def column
+  def group_column
     strong_parameters.permit(*column_attributes)
   end
-  def column_attributes
-    [:id, :text, :question_group_id, :answers_textbox]
+  def group_column_attributes
+    [:id, :text, :question_group_id, :answers_textbox, :choices_key]
   end
 end
 
@@ -23,7 +23,7 @@ module ParamDecorator
   def question_group_attributes
     super +
         [:id, :question_type, :question_type_id, :question_id, :survey_section_id, :is_mandatory,
-         columns_attributes: column_attributes,
+         group_columns_attributes: group_column_attributes,
          dependency_attributes: dependency_attributes,questions_attributes: question_attributes]
   end
 
@@ -43,7 +43,7 @@ module ParamDecorator
   def dependency_condition_attributes
     super +
         [:id, :_destroy, :dependency_id, :rule_key, :question_id, :operator, :answer_id,
-         :float_value, :integer_value, :join_operator, :column_id, column_attributes: column_attributes]
+         :float_value, :integer_value, :join_operator, :column_id, group_column_attributes: group_column_attributes]
   end
 
   def dependency_attributes
@@ -58,8 +58,8 @@ module ParamDecorator
          :prefix, :suffix, :decimals, :dependency_attributes, :id,
          :hide_label, :dummy_blob, :dynamically_generate, :dynamic_source,
          :omit_text, :omit, :other, :other_text, :is_comment, :comments, :comments_text,
-         :modifiable, :report_code, :answers_textbox, :grid_columns_textbox, :_destroy,
-         :grid_rows_textbox, :dropdown_column_count, :dummy_answer, dummy_answer_array: [], question_group_attributes: [:id, :display_type, :data_export_identifier, columns_attributes: column_attributes, questions_attributes: [:id, :pick, :display_order, :display_type, :text, :question_type_id, :_destroy]],
+         :modifiable, :report_code, :choices_key, :answers_textbox, :grid_columns_textbox, :_destroy,
+         :grid_rows_textbox, :dropdown_column_count, :dummy_answer, dummy_answer_array: [], question_group_attributes: [:id, :display_type, :data_export_identifier, group_columns_attributes: group_column_attributes, questions_attributes: [:id, :pick, :display_order, :display_type, :text, :question_type_id, :_destroy]],
          answers_attributes: answer_attributes,
          dependency_attributes: dependency_attributes]
   end
