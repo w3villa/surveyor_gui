@@ -27,6 +27,7 @@ module SurveyorGui
       @surveyform = Surveyform.new(:template=>template)
       @surveyform.survey_sections.build(:title=>'Section 1', :display_order=>0, :modifiable=>true)#.questions.build(:text=>'New question',:pick=>'none',:display_order=>0,:display_type=>'default', :modifiable=>modifiable).answers.build(:text=>'string', :response_class=>'string', :display_order=>1, :template=>true)
       @question_no = 0
+      @topic_id = params[:topic_id]
     end
 
     def edit
@@ -43,11 +44,13 @@ module SurveyorGui
       @surveyform.survey_sections.build if @surveyform.survey_sections.blank?
       @question_no = 0
       @url = "update"
+      @topic_id = @surveyform.topic_id
     end
 
     def create
-      @surveyform = Surveyform.new(surveyforms_params.merge(user_id: @current_user.nil? ? @current_user : @current_user.id))
+      @surveyform = Surveyform.new(surveyforms_params.merge(topic_id: surveyforms_params[:topic_id], user_id: @current_user.nil? ? @current_user : @current_user.id))
       if @surveyform.save
+
         flash[:notice] = "Successfully created survey."
         @title = "Edit Survey"
         @question_no = 0

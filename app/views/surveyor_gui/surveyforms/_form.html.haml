@@ -25,6 +25,7 @@
     - else
       .panel.panel-default
         = f.hidden_field :id
+        = f.hidden_field :topic_id,  :value => @topic_id
         = f.input :title, :required=>true
         = f.input :internal_title
         = f.input :template, :disabled=>@survey_locked, :label => "Template?"
