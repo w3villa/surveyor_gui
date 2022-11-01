@@ -1,4 +1,4 @@
-SurveyorGui::Engine.routes.draw do
+  SurveyorGui::Engine.routes.draw do
 
   resources :surveyforms do
     member do

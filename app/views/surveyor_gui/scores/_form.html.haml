@@ -13,6 +13,8 @@
         .dependency_editor
           = f.simple_fields_for :answers do |answer|
             = answer.input :weight, label: answer.object.text
+        .dependency_editor
+          = f.input_field :correct_answer_id, :collection => Answer.where('question_id=?',@question.id).map{|a| [a.text,a.id]}, :as => :radio_buttons 
 
         .dependency_editor
 
