@@ -3,7 +3,7 @@
     .modal-header
       %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
         %span{"aria-hidden" => "true"} ×
-      %h2#exampleModalLongTitle.modal-title Scores
+      %h3#exampleModalLongTitle.modal-title Scores
 
     = simple_form_for @question, :url => scores_path+'/'+@question.id.to_s do |f|
       .modal-body
@@ -13,9 +13,12 @@
         .dependency_editor
           = f.simple_fields_for :answers do |answer|
             = answer.input :weight, label: answer.object.text
-        .dependency_editor
-          = f.input_field :correct_answer_id, :collection => Answer.where('question_id=?',@question.id).map{|a| [a.text,a.id]}, :as => :radio_buttons 
 
+        %hr
+        %h4 Select Correct option
+        .dependency_editor{style: "margin-left: 15px;"}
+          = f.input_field :correct_answer_id, :collection => Answer.where('question_id=?',@question.id).map{|a| [a.text,a.id]}, :as => :radio_buttons 
+        %br
         .dependency_editor
 
           %ul.nav.nav-tabs{:role => "tablist"}

@@ -17,7 +17,11 @@
             %i.fa.fa-bars
             &nbsp
         %span.question_button_bar
-          = link_to "Edit Question", question_group_edit_url_based_on_question_type(f.object), class: "btn btn-primary"
+          -if params[:course_id]
+            = link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary"
+          -else
+            = link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary"
+
 
           %button.btn.btn-primary.cut-question#cut_question{:type => "button"} Cut Question
 
