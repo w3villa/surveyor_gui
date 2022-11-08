@@ -4,20 +4,20 @@
   .col-md-4
     = f.input :omit, label: "Add <i>none of the above</i> choice?".html_safe, as: :boolean, wrapper_html: { class: "horizontal-checkbox" }
     = f.input :omit_text,                                          |
-      label: "Custom label for <i>none of the above</i>".html_safe, |
+      label: "&nbsp;Custom label for none of the above", |
       hint: "if chosen will uncheck all other choices",
       as: :string
   .col-md-4
     = f.input :other, label: "Add user determined choice?", as: :boolean, wrapper_html: { class: "horizontal-checkbox" }
     = f.input :other_text,                             |
       placeholder: "Other",                            |
-      label: "Custom label for <i>other</i>".html_safe, |
+      label: "&nbsp;Custom label for other", |
       hint: "if chosen will display input box",
       as: :string
   .col-md-4
     = f.input :comments, label: "At the bottom of questions, add input box?", as: :boolean, wrapper_html: { class: "horizontal-checkbox" }
     = f.input :comments_text,              |
-      label: "Custom label for input box", |
+      label: "&nbsp;Custom label for input box", |
       hint: "box for notes/comments",      |
       placeholder: "Comments",             |
       as: :string                          |
