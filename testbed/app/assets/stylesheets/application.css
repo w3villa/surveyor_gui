@@ -13,17 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
-.close-logic {
-  margin-top: -40px !important;
-}
-
-.add_condition_image {
-  margin-left: 5px !important;
-  height: 30px !important;
-  width: 30px !important; 
-}
-
-.horizontal_boolean_option{
-  margin-left:5px
-}
