@@ -12,11 +12,14 @@
     %div#dependency_conditions_partial{"data-dependency_id" => "#{d.object.id.to_s}", "data-question_id" => "#{@question.id.to_s}"}
     %hr
     %p.floatdown2.add_condition
-      Add a Condition #{image_tag 'addicon.png', :border => 0}
+      Add a Condition #{image_tag 'addicon.png',:class=>"add_condition_image", :border => 0}
 
 :css
   .add_condition_image image {
-  margin-left: 5px !important;
-  height: 30px !important;
-  width: 30px !important; 
+    margin-left: 5px !important;
+    height: 30px !important;
+    width: 30px !important; 
+  }
+   h3 p{
+    display: inline;
   }
