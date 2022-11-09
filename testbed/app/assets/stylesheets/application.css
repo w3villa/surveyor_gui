@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+#surveyor-gui-mount-point{
+margin-top: 20px;
+}
