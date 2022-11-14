@@ -15,10 +15,14 @@
       .modal-footer
         = f.button :submit,  'Save Changes',  data: { "ajax-target" => "#question_#{@question.id}", "ajax-handler" => 'logicAddHandler', "ajax-error-handler" => "modalErrorHandler", "ajax-error-target" => "#modal", disable_with: "Please wait..." }
         %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+-# :css
+-#   .close-logic{
+-#     margin-top: -20px !important;
+-#   }
+-#   h5{
+-#     margin-bottom: 0 !important;
+-#   }
 :css
   .close-logic{
-    margin-top: -20px !important;
-  }
-  h5{
-    margin-bottom: 0 !important;
+    margin-top: -40px !important;
   }
