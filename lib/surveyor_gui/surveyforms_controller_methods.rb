@@ -40,7 +40,7 @@ module SurveyorGui
         # @survey_locked=true
         flash.now[:error] = "STOP!! Responses have already been collected for this survey, therefore modifications to anything other than simple text may result in data corruption.  PROCEED WITH CAUTION!!"
       end
-      @title = "Edit "+ (@surveyform.template ? 'Template' : 'Survey')
+      @title = "Edit "+ (@surveyform.template ? 'Quiz' : 'Survey')
       @surveyform.survey_sections.build if @surveyform.survey_sections.blank?
       @question_no = 0
       @url = "update"
