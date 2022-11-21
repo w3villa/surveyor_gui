@@ -1,9 +1,9 @@
 .modal-dialog.dependencies{:role => "document"}
   .modal-content
     .modal-header
-      %h5#exampleModalLongTitle.modal-title= @title
       %button.close.close-logic{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
         %span{"aria-hidden" => "true"} ×
+      %p#exampleModalLongTitle= @title
 
     - question_or_group = @question.part_of_group? ? @question.question_group : @question
     = simple_form_for question_or_group, :url => dependencys_path+'/'+@question.id.to_s do |f|

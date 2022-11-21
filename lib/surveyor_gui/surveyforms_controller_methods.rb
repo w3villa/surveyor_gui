@@ -21,7 +21,7 @@ module SurveyorGui
     end
 
     def new
-      @title = "Create New "+ (params[:template] == 'template'? 'Template' : 'Survey')
+      @title = "Create New "+ (params[:template] == 'template'? 'Quiz' : 'Survey')
       @hide_survey_type = params[:hide_survey_type]
       template = params[:template] == 'template'? true : false
       @surveyform = Surveyform.new(:template=>template)
@@ -40,7 +40,7 @@ module SurveyorGui
         # @survey_locked=true
         flash.now[:error] = "STOP!! Responses have already been collected for this survey, therefore modifications to anything other than simple text may result in data corruption.  PROCEED WITH CAUTION!!"
       end
-      @title = "Edit "+ (@surveyform.template ? 'Quiz' : 'Survey')
+      @title = "Edit "+ (@surveyform.template ? 'Template' : 'Survey')
       @surveyform.survey_sections.build if @surveyform.survey_sections.blank?
       @question_no = 0
       @url = "update"
