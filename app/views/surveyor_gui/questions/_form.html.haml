@@ -23,7 +23,7 @@
         = f.hidden_field :question_id
 
 
-    = f.input :text , :label => "Question", :input_html=>{:size=>'55', value: adjusted_text(question), class: "tinymce"}
+    = f.input :text , :label => "Question * ", :input_html=>{:size=>'55', value: adjusted_text(question), class: "tinymce"}
 
     %span.fl
       %strong.mr-4 Mandatory?
@@ -82,3 +82,11 @@
   .buttons.ml-4
     = f.button :submit, 'Save Changes', data: { disable_with: "Please wait..." }, class: "btn btn-primary"
     = link_to "Cancel", surveyor_gui.edit_surveyform_url(@survey), class: "btn btn-danger ml-2"
+
+:css
+  abbr{
+    display:none;
+  }
+  .fl strong{
+    margin-right: 5px;
+  }
