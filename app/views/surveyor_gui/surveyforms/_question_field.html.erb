@@ -14,7 +14,7 @@
    case question_type
      when :slider -%>
       <div class="slider">
-      <!-- The slider uses the Jquery UISlider plugin (http://www.filamentgroup.com/lab/update_jquery_ui_16_slider_from_a_select_element/) -->
+      <!-- The slider uses the Jqauery UISlider plugin (http://www.filamentgroup.com/lab/update_jquery_ui_16_slider_from_a_select_element/) -->
       <!-- Look in application.js for the hook - it selects all input select elements with "uislider" as the class -->
       <%= f.input :dummy_answer, :collection => f.object.answers.map{|a| a.text}, :as => :select, :label => false,
                   :input_html => {:class => "uislider"}, :include_blank => false, :wrapper_html=>{:class => 'shrink_slider'} %>
@@ -31,9 +31,9 @@
             <%= f.input :dummy_answer,  :as=>:string, label: answer.text %>
           </span>
       <% else -%>
-        <%= f.input_field :dummy_answer, label: (f.object.repeater? ? answer.text : false), collection: [answer.text], :as => :radio_buttons%>
+        <%= f.input_field :dummy_answer, label: (f.object.repeater? ? answer.text : false), collection: [answer.text], :as => :radio_buttons,:class=>"hellp"%>
         <% if answer.response_class == "string" %>
-          <span class="other">
+          <span class="other" style="margin-left: 3.9rem;">
             <%= f.input_field :dummy_answer,  :as=>:string, :label=> false%>
           </span>
         <% end -%>
@@ -43,9 +43,9 @@
   <% when :grid_one -%>
 
     <% f.object.answers.each do |answer| -%>
-      <%= f.input_field :dummy_answer, label: false, collection: [answer.text], :as => :radio_buttons %>
+      <%= f.input_field :dummy_answer, label: false, collection: [answer.text], :as => :radio_buttons,:class=>"hellp" %>
       <% if answer.response_class == "string" %>
-        <span class="other">
+        <span class="other" style="margin-left: 3.9rem;">
           <%= f.input_field :dummy_answer,  :as=>:string, :label=>false%>
         </span>
       <% end -%>
@@ -53,7 +53,7 @@
 
   <% when :dropdown -%>
 
-    <%= f.input :dummy_answer, label: false, :collection => f.object.answers.collect(&:text), :as => :select %>
+    <%= f.input :dummy_answer, label: false, :collection => f.object.answers.collect(&:text), :as => :select , :prompt => 'Select', :class => " ml-4ss"%>
 
 
   <% when :grid_dropdown -%>
@@ -98,16 +98,16 @@
     <% end %>
 
   <% when :label -%>
-     <span class='actual-question' data-question-id='<%=f.object.id %>' style="margin-left: 4.5em;">
+     <span class='actual-question' data-question-id='<%=f.object.id %>' style="margin-left: 3.5em;">
      <%= f.object.text %>
      </span>
 
   <% when  :string -%>
-    <%= f.input :dummy_answer, :as=>:string, :label=>false, :input_html=>{:rows=>"1"}%>
+    <%= f.input :dummy_answer, :as=>:string, :label=>false, :input_html=>{:rows=>"1"},:style => "margin-left: 3.5em;"%>
 
   <% when  :box -%>
 
-    <%= f.input :dummy_answer, :as=>:text, :label=>false, :input_html=>{ :rows=>"3"}%>
+    <%= f.input :dummy_answer, :as=>:text, :label=>false, :input_html=>{ :rows=>"3"},:style => "margin-left: 3.5em;"%>
 
   <% when :number -%>
     <!-- Prefix -->
@@ -118,7 +118,7 @@
     </span>
 
     <!-- Number -->
-    <%= f.input :dummy_answer, :as=>:string, :label=>false, :input_html=>{:size=>"10"}, :wrapper_html=>{:class=>'notfirst number'} %>
+    <%= f.input :dummy_answer, :as=>:string, :label=>false, :input_html=>{:size=>"10"}, :wrapper_html=>{:class=>'notfirst number'} ,:style => "margin-left: 3.5em;"%>
 
     <!-- Suffix -->
     <span class="suffix">
@@ -126,18 +126,18 @@
       <%= f.object.answers.first.text.split('|')[1] %>
     </span>
   <% when :date -%>
-      <%= f.input :dummy_answer, :as=>:date_picker, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 4.5em;"},
-                  :hint => 'mm/dd/yy', :hint_html=>{:style=>'margin-left:5em;'} %>
+      <%= f.input :dummy_answer, :as=>:date_picker, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 3.5em;"},
+                  :hint => 'mm/dd/yy', :hint_html=>{:style=>'margin-left:5rem !important;'} %>
 
   <% when :datetime -%>
-      <%= f.input :dummy_answer, :as=>:datetime_picker, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 4.5em;"},
-                  :hint => 'mm/dd/yy hh:mm', :hint_html=>{:style=>'margin-left:5em;'} %>
+      <%= f.input :dummy_answer, :as=>:datetime_picker, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 3.5em;"},
+                  :hint => 'mm/dd/yy hh:mm', :hint_html=>{:style=>'margin-left:5rem !important;'} %>
 
   <% when :time -%>
-      <%= f.input :dummy_answer, :as=>:time_picker, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 4.5em;"},
-                  :hint => 'hh:mm', :hint_html=>{:style=>'margin-left:5em;'} %>
+      <%= f.input :dummy_answer, :as=>:time_picker, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 3.5em;"},
+                  :hint => 'hh:mm', :hint_html=>{:style=>'margin-left:5rem !important;'} %>
   <% when :file -%>
-    <%= f.input :dummy_blob, :as => :file, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 4.5em;"} %>
+    <%= f.input :dummy_blob, :as => :file, :label=>false, :input_html=>{:size => "8",:style=>"margin-left: 3.5em;"} %>
 
   <% else -%>
     <br/>

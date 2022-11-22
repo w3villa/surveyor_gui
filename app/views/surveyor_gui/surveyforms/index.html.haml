@@ -14,14 +14,14 @@
   = form_tag surveyforms_path, :method => 'get' do
     %p
       = text_field_tag :search, params[:search]
-      = submit_tag "Search", :name => nil
+      = submit_tag "Search",:class => "filter_search", :name => nil
 
   .row
     .col-sm-8
       = will_paginate
     .col-sm-4
       .pagination
-        %label Filter by:
+        %label.filter-label  Filter by:
         .btn-group{role: "group" }
           %a.btn.btn-default{class: ('active' if params[:template].nil?), href: surveyforms_path()} All
           %a.btn.btn-default{class: ('active' if params[:template] == "false"), href: surveyforms_path(template: "false")} Surveys Only
@@ -64,3 +64,14 @@
             = link_to "Delete ALL responses", surveyor_gui.destroy_all_responses_url(survey_id: survey.id), data: { confirm: 'Are you sure?  This will permanently delete ALL responses to this survey!' }, :method => :delete, class: "btn btn-link"
   %br/
   = will_paginate
+
+:css
+  .filter-label{
+    padding-left:5px
+  }
+  .filter_search{
+    background-color: #3c8dbc;
+    border: none;
+    color: white;
+    border-radius: 3px;
+  }
