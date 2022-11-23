@@ -18,9 +18,9 @@
             &nbsp
         %span.question_button_bar
           -if params[:course_id]
-            = link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary"
+            = link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary", :target=>'_self'
           -else
-            = link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary"
+            = link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary", :target=>'_self'
 
 
           %button.btn.btn-primary.cut-question#cut_question{:type => "button"} Cut Question
@@ -43,6 +43,6 @@
         = render_one_group ss
   - if !@survey_locked && (f.object.modifiable?)
     .question_buttons_bottom
-      = link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: f.object.survey_section.id, prev_question_id: f.object.id), class: "cut btn btn-primary add-question"
+      = link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: f.object.survey_section.id, prev_question_id: f.object.id), class: "cut btn btn-primary add-question", :target=>'_self'
 
       %button.btn.btn-primary.paste-question#paste_question{"data-question-id" => f.object.id, :type => "button", style: "display:none"} Paste Question
