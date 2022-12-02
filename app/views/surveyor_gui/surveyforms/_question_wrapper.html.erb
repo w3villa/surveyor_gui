@@ -29,9 +29,9 @@
 
                 <span class="question_button_bar">
             <% if params[:course_id] %> 
-                <%= link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary"%>
+                <%= link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary", :target=>'_self'%>
             <% else%>
-                <%= link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary" %>
+                <%= link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary", :target=>'_self'%>
             <% end %>
 
 
@@ -83,3 +83,9 @@
         </div>
     </fieldset>
 <% end %>
+<% end %>
+<style type="text/css">
+    .radio{
+        margin:  1em 0 0 1.5em !important;
+    }
+</style>

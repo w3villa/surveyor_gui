@@ -17,3 +17,15 @@
 #surveyor-gui-mount-point{
 margin-top: 20px;
 }
+
+.add_condition_image {
+  margin-left: 5px;
+  height: 30px;
+  width: 30px !important;
+}
+
+.add_condition_image {
+  margin-left: 5px !important;
+  height: 30px !important;
+  width: 30px !important; 
+}

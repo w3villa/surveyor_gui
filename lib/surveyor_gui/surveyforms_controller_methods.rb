@@ -21,7 +21,7 @@ module SurveyorGui
     end
 
     def new
-      @title = "Create New "+ (params[:template] == 'template'? 'Template' : 'Survey')
+      @title = "Create New "+ (params[:template] == 'template'? 'Quiz' : 'Survey')
       @hide_survey_type = params[:hide_survey_type]
       template = params[:template] == 'template'? true : false
       @surveyform = Surveyform.new(:template=>template)
