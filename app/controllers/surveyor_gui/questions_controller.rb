@@ -56,8 +56,7 @@ class SurveyorGui::QuestionsController < ApplicationController
         #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
         # render :inline => '<div id="cboxQuestionId">'+@question.id.to_s+'</div>', :layout => 'surveyor_gui/surveyor_gui_blank'
 
-        redirect_to surveyor_gui.edit_surveyform_url(@question.survey_section.survey)
-
+        redirect_to surveyor_gui.edit_surveyform_url(@question.survey_section.survey,topic_id: params[:question][:topic_id])
       else
         @title = "Add Question"
         @survey_section = @question.survey_section

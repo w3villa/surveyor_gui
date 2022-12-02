@@ -5,7 +5,7 @@
     = f.hidden_field :id
     = f.hidden_field :display_type
     = hidden_field_tag :prev_question_id, params[:prev_question_id] if params[:prev_question_id].present?
-
+    = f.hidden_field :topic_id ,value: @survey_section.surveyform.topic_id
     - if question.is_a? Question
       = f.hidden_field :display_order, class: "question-display-order"
       = f.hidden_field :survey_section_id
@@ -43,7 +43,7 @@
     %br/
     %strong Question Type
     %br/
-    .question_type.row
+    .question_type.row.section_top_question_type
       .col-md-3
         = f.input :question_type_id,
           collection: question_type_subset([:pick_one]) ,
@@ -79,10 +79,16 @@
         = f.input :report_code, :label=>'Report Code', :label_html=>{:style=>'width:10em;'},:hint=>'Use this code to uniquely identify application data driven questions for reporting.'
         %br/
     %br/
-  .buttons
+  .buttons.ml-4.question_buttons_bottom
     = f.button :submit, 'Save Changes', data: { disable_with: "Please wait..." }, class: "btn btn-primary"
     = link_to "Cancel", surveyor_gui.edit_surveyform_url(@survey)
--# :css
--#   .question_data_export_identifier label{
--#     padding-right:3px
--#   }
+:css
+  abbr{
+    display:none;
+  }
+  .fl strong{
+    margin-right: 5px;
+  }
+  .buttons.ml-4.question_buttons_bottom {
+    padding-bottom: 20px !important;
+  }

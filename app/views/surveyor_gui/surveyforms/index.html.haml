@@ -1,6 +1,6 @@
 
 #survey
-  %h1
+  %h1.all_surveys_heading
     Surveyor Survey System
     %a{href: "https://westedintranet--simpplr.na129.visual.force.com/apex/simpplr__app?u=/site/a076100000Mb4zhAAB/page/a014M00000T5DagQAF", target: "_blank"}
       %span.fa.fa-question-circle
@@ -17,9 +17,9 @@
       = submit_tag "Search", :name => nil
 
   .row
-    .col-sm-8
+    .col-lg-8.col-md-6.col-sm-6
       = will_paginate
-    .col-sm-4
+    .col-lg-4.col-md-6.col-sm-6
       .pagination
         %label Filter by:
         .btn-group{role: "group" }
@@ -28,7 +28,7 @@
           %a.btn.btn-default{class: ('active' if params[:template] == "true"), href: surveyforms_path(template: "true")} Templates Only
 
   %br/
-  %table.table.table-striped
+  .table-overflow-div
     %tr
       %th Title
       %th Version
@@ -64,3 +64,7 @@
             = link_to "Delete ALL responses", surveyor_gui.destroy_all_responses_url(survey_id: survey.id), data: { confirm: 'Are you sure?  This will permanently delete ALL responses to this survey!' }, :method => :delete, class: "btn btn-link"
   %br/
   = will_paginate
+:css
+  #search{
+    height: 31px !important;
+  }

@@ -1,5 +1,5 @@
 #survey
-  %h3{style: "margin-left: 8px;"}
+  %h3.edit_survey_top_class{style: "margin-left: 8px;"}
     = @title
     -if params[:course_id] && params[:action] == "edit"
       = link_to 'Back', "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
