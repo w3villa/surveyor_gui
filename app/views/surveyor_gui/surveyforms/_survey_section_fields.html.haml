@@ -29,7 +29,7 @@
             - if !@survey_locked && (s.object.modifiable?)
 
               .question_buttons_top
-                = link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: s.object.id), class: "btn btn-primary add-question"
+                = link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: s.object.id), class: "btn btn-primary add-question", :target=>'_self'
 
 
                 %button.btn.btn-primary.paste-question#paste_question{:type => "button", style: "display:none"} Paste Question
