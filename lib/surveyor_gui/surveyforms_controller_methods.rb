@@ -32,7 +32,6 @@ module SurveyorGui
 
     def edit
       @surveyform = Surveyform.where(:id=>params[:id]).includes(:survey_sections).first
-      byebug
       topic = params[:topic_id].to_i
       if @surveyform.topic_id.eql?(topic)
         @survey_locked=false
