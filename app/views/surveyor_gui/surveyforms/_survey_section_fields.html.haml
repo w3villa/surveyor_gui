@@ -22,17 +22,18 @@
                 %button.btn.btn-primary#cut_section{"data-cut_section_surveyform_url" => surveyor_gui.cut_section_surveyform_url(id: f.object.id, survey_section_id: s.object.id), "data-section_already_cut" => session[:cut_section], "data-survey_section_id" => s.object.id, "data-survey_section_title" => s.object.title, :type => "button"} Cut Section
               %button.btn.btn-primary#delete_section{"data-survey_section_id" => s.object.id, "data-survey_section_url" => surveyor_gui.survey_section_url(s.object.id), "data-survey_section_title" => s.object.title, :type => "button"} Delete Section
 
-        %fieldset{:style => "background:white; margin-top: 65px; margin-right: 10px;"}
+        %fieldset{:style => "background:white"}
           .fields.surveysection
             = s.hidden_field :id
             = s.hidden_field :modifiable
             - if !@survey_locked && (s.object.modifiable?)
               - if params[:course_id].present?
                 .question_buttons_top
-                  = link_to "Add Question main",  "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/new/#{s.object.id}", class: "btn btn-primary add-question", :target=>'_self'
-              - else
+                  = link_to "Add Question", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/new/#{s.object.id}", class: "btn btn-primary add-question", :target=>'_self'
+              - else              
                 .question_buttons_top
-                  = link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: s.object.id), class: "btn btn-primary add-question", :target=>'_self' 
+                  = link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: s.object.id), class: "btn btn-primary add-question", :target=>'_self'
+
 
                 %button.btn.btn-primary.paste-question#paste_question{:type => "button", style: "display:none"} Paste Question
             %div{:id => "sortable_question#{s.object.id.to_s}", class: ("sortable_questions" unless params[:action] == "show")}

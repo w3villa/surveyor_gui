@@ -1,0 +1,120 @@
+[33mcommit b80ad6d48f47ece16ddd21ae6db907f59d514038[m[33m ([m[1;36mHEAD -> [m[1;32mtopic_quiz_ui_chages[m[33m, [m[1;31morigin/topic_quiz_ui_chages[m[33m)[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Sat Dec 3 06:18:04 2022 +0530
+
+    remove the conflict after pull taken of topic modufication branch
+
+[33mcommit 08447267223a393f1fab8b65f7db0cafdafcdef6[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Sat Dec 3 00:28:00 2022 +0530
+
+    fix the button link urls form add edit question
+
+[33mcommit 6285e8f07f8f80d50da8853a78188eec6563bb7b[m
+Merge: f5cb575 86f6001
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Fri Dec 2 17:00:39 2022 +0530
+
+    pull taken of quiz modification branch
+
+[33mcommit f5cb575c673681f1bdde9f716308c98768f7bd8a[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Fri Dec 2 14:46:28 2022 +0530
+
+    fix the question page reload issue
+
+[33mcommit b83491ae7695f1dc2c3471417e9e6fa8b0393546[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Fri Dec 2 14:43:29 2022 +0530
+
+    fix the gem changes like url manupularion breaking css
+
+[33mcommit 86f6001469e549f2ecbc9b123000c40e8a91b7e5[m[33m ([m[1;31mupstream/topic_quiz_modifications[m[33m, [m[1;32mtopic_quiz_modifications[m[33m)[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Wed Nov 23 19:46:08 2022 +0530
+
+     fixed page reload issue of question page
+
+[33mcommit d6dbd863bca2e7f1600ef70042d77a30b555c046[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Tue Nov 22 14:08:07 2022 +0530
+
+     fixed questions aoption css isuue
+
+[33mcommit 6f5b372dd98a59c5e9f1d16c0dc692676bbfb728[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Tue Nov 22 12:43:00 2022 +0530
+
+     fixed add more options of sub questions css issue
+
+[33mcommit b9006d654857e5e72561cba6a7b1e82cd0d98024[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Tue Nov 22 11:44:41 2022 +0530
+
+     fixed socres modal ui issue  and ui callender css issue on admin opanel
+
+[33mcommit 4599a6c7bc101258cfe47e4c3227177edf0db7a3[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Mon Nov 21 15:09:27 2022 +0530
+
+     fioxed add icon issue
+
+[33mcommit c1a5202a1d30147c3a30c0d4f28b5670fa20b02c[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Mon Nov 21 14:59:40 2022 +0530
+
+     fixed add mor3e quiestion icon css issue
+
+[33mcommit 9f36f6ae1fb7a1cbde86e665a43e1245b3ea661b[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Mon Nov 21 14:14:23 2022 +0530
+
+     fixed questions css issue
+
+[33mcommit 1218c4cf591a7f3c247e7df149fe7099d091acf7[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Sun Nov 20 20:01:43 2022 +0530
+
+     fixed form css issue
+
+[33mcommit a06844a5fd687b6b282e0af39be38abe24cea5e4[m
+Author: mariyam <mariyam-w3villa@mariyams-MacBook-Pro.local>
+Date:   Fri Nov 18 12:47:28 2022 +0530
+
+    fixed ui issues
+
+[33mcommit 577cb202547ba25781c1e5ff56dfee4822d62b6f[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Mon Nov 14 13:12:20 2022 +0530
+
+    fixing the default coming in the answers
+
+[33mcommit 346d38bc4641060396bafa23862de5e94e24cb55[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Mon Nov 14 12:57:51 2022 +0530
+
+    fixing the default coming in answers
+
+[33mcommit d6ce617a3a904d99a74b5144e52baafb41ba9ef2[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Thu Nov 10 13:12:06 2022 +0530
+
+    updated css for question data export
+
+[33mcommit 668aaac5fd6f121efe128de54a2676ea14382fe3[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Wed Nov 9 16:53:42 2022 +0530
+
+    fix the model breaking
+
+[33mcommit 60634b1df36b2998fd47e26d87e027427d00b361[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Wed Nov 9 16:30:39 2022 +0530
+
+    fixing the image brake of ass question
+
+[33mcommit 1d2ea5bb27fd981e124ef7c729a79cecb6835cc5[m
+Author: deepanshu-w3villa <deepanshu.kashyap@w3villa.com>
+Date:   Wed Nov 9 15:59:01 2022 +0530
+
+    fixing the unwanted message

@@ -21,7 +21,7 @@ module SurveyorGui
     end
 
     def new
-      @title = "Create New "+ (params[:template] == 'template'? 'Template' : 'Survey')
+      @title = "Create New "+ (params[:template] == 'template'? 'Quiz' : 'Survey')
       @hide_survey_type = params[:hide_survey_type]
       template = params[:template] == 'template'? true : false
       @surveyform = Surveyform.new(:template=>template)
@@ -47,7 +47,7 @@ module SurveyorGui
       @question_no = 0
       @url = "update"
       @topic_id = @surveyform.topic_id
-      else
+       else
         flash[:notice] = "Quiz not belongs to you"
         redirect_to '/'
       end
