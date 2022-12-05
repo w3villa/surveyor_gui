@@ -13,6 +13,8 @@
       = f.hidden_field :modifiable
       = f.hidden_field :question_group_id
       = f.hidden_field :topic_id ,value: @survey_section.surveyform.topic_id
+      = f.hidden_field :lesson_id ,value: @survey_section.survey.topic.lesson_id
+      = f.hidden_field :course_id ,value:  @survey_section.survey.topic.lessons.first.course_id
 
     - if question.is_a? QuestionGroup
 
