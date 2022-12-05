@@ -53,7 +53,7 @@ module ParamDecorator
   def question_attributes
     super +
       [:question_type, :question_type_id, :survey_section_id, :question_group_id, :text,
-       :text_adjusted_for_group,
+       :text_adjusted_for_group, :topic_id, :lesson_id, :course_id,
        :pick, :reference_identifier, :display_order, :display_type, :is_mandatory,
        :prefix, :suffix, :decimals, :dependency_attributes, :id,
        :hide_label, :dummy_blob, :dynamically_generate, :dynamic_source,
