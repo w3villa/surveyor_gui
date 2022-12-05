@@ -36,7 +36,6 @@ module SurveyorGui
       #unfortunately, request.referrer does not seem to capture parameters. Need to add explicitly.
       #don't edit the format of a non template survey that has responses. could cause unpredictable results
       @surveyform.response_sets.where('test_data=?',true).map{|r| r.destroy}
-      byebug
       if !@surveyform.template && @surveyform.responses.count>0
         # @survey_locked=true
         flash.now[:error] = "STOP!! Responses have already been collected for this survey, therefore modifications to anything other than simple text may result in data corruption.  PROCEED WITH CAUTION!!"
