@@ -44,7 +44,7 @@
 
     %br/
     %br/
-    %strong Question Type
+    .question_type.row.section_top_question_type
     %br/
     .question_type.row
       .col-md-3
@@ -82,7 +82,7 @@
         = f.input :report_code, :label=>'Report Code', :label_html=>{:style=>'width:10em;'},:hint=>'Use this code to uniquely identify application data driven questions for reporting.'
         %br/
     %br/
-  .buttons.ml-4
+  .buttons.ml-4.question_buttons_bottom
     = f.button :submit, 'Save Changes', data: { disable_with: "Please wait..." }, class: "btn btn-primary"
     = link_to "Cancel", surveyor_gui.edit_surveyform_url(@survey), class: "btn btn-danger ml-2"
 
@@ -92,4 +92,7 @@
   }
   .fl strong{
     margin-right: 5px;
+  }
+  .buttons.ml-4.question_buttons_bottom {
+    padding-bottom: 20px !important;
   }
