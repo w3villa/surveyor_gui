@@ -57,7 +57,6 @@ class SurveyorGui::QuestionsController < ApplicationController
         # render :inline => '<div id="cboxQuestionId">'+@question.id.to_s+'</div>', :layout => 'surveyor_gui/surveyor_gui_blank'
 
         redirect_to surveyor_gui.edit_surveyform_url(@question.survey_section.survey)
-
         # redirect_to "/companies/courses/#{params[:question][:course_id]}/lessons/#{params[:question][:lesson_id]}/topics/#{params[:question][:topic_id]}/topic-quiz/edit/#{params[:question][:survey_section_id]}"
 
       else
