@@ -50,8 +50,7 @@ module SurveyorGui
     def create
       @surveyform = Surveyform.new(surveyforms_params.merge(topic_id: surveyforms_params[:topic_id], user_id: @current_user.nil? ? @current_user : @current_user.id))
       if @surveyform.save
-
-        flash[:notice] = "Successfully created survey."
+        flash[:notice] = "Survey Created Successfully."
         @title = "Edit Survey"
         @question_no = 0
         redirect_to edit_surveyform_path(@surveyform.id)
@@ -90,7 +89,7 @@ module SurveyorGui
         @surveyform.destroy
 
         if @surveyform.destroyed?
-          flash[:notice] = "Successfully deleted survey."
+          flash[:notice] = "Survey Deleted Successfully."
         else
           flash[:error] = 'Survey could not be deleted.'
         end
