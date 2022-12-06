@@ -64,7 +64,7 @@ module SurveyorGui
       @title = "Update Survey"
       @surveyform = Surveyform.includes(:survey_sections).find(params[:surveyform][:id])
       if @surveyform.update(surveyforms_params)
-        flash[:notice] = "Successfully updated surveyform."
+        flash[:notice] = "Surveyfrom Updated Successfully."
         # redirect_to edit_surveyform_path(@surveyform.id)
         redirect_to request.referer
       else
