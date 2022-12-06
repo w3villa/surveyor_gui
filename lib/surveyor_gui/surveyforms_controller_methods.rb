@@ -33,6 +33,10 @@ module SurveyorGui
     def edit
       @surveyform = Surveyform.where(:id=>params[:id]).includes(:survey_sections).first
       @survey_locked=false
+
+      puts @topic_id
+
+      puts params[:topic_id]
       #unfortunately, request.referrer does not seem to capture parameters. Need to add explicitly.
       #don't edit the format of a non template survey that has responses. could cause unpredictable results
       @surveyform.response_sets.where('test_data=?',true).map{|r| r.destroy}
