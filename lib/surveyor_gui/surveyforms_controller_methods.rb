@@ -31,7 +31,7 @@ module SurveyorGui
     end
 
     def edit
-      @surveyform = Surveyform.where(:id=>params[:id]).first
+      @surveyform = Surveyform.where(:id=>params[:id]).includes(:survey_sections).first
       topic = params[:topic_id].to_i
       if @surveyform.topic_id.eql?(topic)
       #unfortunately, request.referrer does not seem to capture parameters. Need to add explicitly.
