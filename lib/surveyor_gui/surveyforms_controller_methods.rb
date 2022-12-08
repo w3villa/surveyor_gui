@@ -96,7 +96,7 @@ module SurveyorGui
         end
       end
 
-      redirect_to redirect_to request.referer
+      redirect_to request.referer
     end
 
     def replace_form
