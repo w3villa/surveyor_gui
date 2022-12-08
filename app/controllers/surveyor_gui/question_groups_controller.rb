@@ -68,7 +68,7 @@ class SurveyorGui::QuestionGroupsController < ApplicationController
         original_question = Question.find(question_group_params[:question_id]) if !question_group_params[:question_id].blank?
         original_question.destroy if original_question
 
-        redirect_to surveyor_gui.edit_surveyform_url(@survey_section.survey)
+        redirect_to "/companies/courses/#{params[:question_group][:course_id]}/lessons/#{params[:question_group][:lesson_id]}/topics/#{params[:question_group][:topic_id]}/topic-quiz/edit/#{SurveySection.find(params[:question_group][:survey_section_id]).survey.id}"
       else
         @title = "Add Question Group"
         render "surveyor_gui/questions/new", locals: { question: @question_group }
@@ -143,9 +143,9 @@ class SurveyorGui::QuestionGroupsController < ApplicationController
 
     # This is a hack to allow non-group questions to be edited and converted to group questions....
     if params[:action] == "new"
-      params.permit(:survey_section_id, :id, :text, :question_id, :question_type_id, :display_order, :pick, :display_type, :prev_question_id).except(:question_id)
+      params.permit(:survey_section_id, :id, :text, :question_id, :question_type_id, :display_order, :pick, :display_type, :prev_question_id,:topic_id, :lesson_id, :course_id,).except(:question_id)
     else
-      params.permit(:survey_section_id, :id, :text, :question_id, :question_type_id, :display_order, :pick, :display_type, :prev_question_id)
+      params.permit(:survey_section_id, :id, :text, :question_id, :question_type_id, :display_order, :pick, :display_type, :prev_question_id,:topic_id, :lesson_id, :course_id,)
     end
   end
 

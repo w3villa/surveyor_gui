@@ -9,6 +9,9 @@
           = q.hidden_field :survey_section_id, value: @survey_section_id
           = q.hidden_field :question_group_id, value: @question_group.id
           = q.hidden_field :id
+          = q.hidden_field :topic_id ,value: (@survey_section.survey.topic_id).to_i
+          = q.hidden_field :lesson_id ,value: (@survey_section.survey.topic.lesson_id).to_i
+          = q.hidden_field :course_id ,value:(  @survey_section.survey.topic.lessons.first.course_id).to_i
           = q.hidden_field :display_order, value: q.object.display_order||1, class: "question-display-order"
           = q.input :text, label: false, wrapper_html:{class: "question"}, input_html: { class: "tinymce" }
         .col-md-2

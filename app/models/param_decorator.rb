@@ -22,9 +22,9 @@ module ParamDecorator
 
   def question_group_attributes
     super +
-      [:id, :question_type, :question_type_id, :question_id, :survey_section_id, :is_mandatory, :prev_question_id,
-       columns_attributes: column_attributes,
-       dependency_attributes: dependency_attributes,questions_attributes: question_attributes]
+    [:id, :question_type, :question_type_id, :question_id, :survey_section_id, :is_mandatory, :prev_question_id,:topic_id, :lesson_id, :course_id,
+      columns_attributes: column_attributes,
+      dependency_attributes: dependency_attributes,questions_attributes: question_attributes]
   end
 
   def response_set_attributes

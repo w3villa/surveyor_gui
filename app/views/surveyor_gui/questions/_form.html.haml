@@ -19,6 +19,9 @@
     - if question.is_a? QuestionGroup
 
       = hidden_field_tag "converted_question_id", params[:question_id]
+      = f.hidden_field :topic_id ,value: (@survey_section.survey.topic_id).to_i
+      = f.hidden_field :lesson_id ,value: (@survey_section.survey.topic.lesson_id).to_i
+      = f.hidden_field :course_id ,value:(  @survey_section.survey.topic.lessons.first.course_id).to_i
 
       = f.input :survey_section_id, as: :hidden, input_html: { value: @survey_section_id }
 
@@ -33,17 +36,6 @@
     = f.input :is_mandatory, :label => false, :as=>:boolean, :wrapper_html=>{:class=>'fl notfirst ml-4'}
 
     -# TODO May want to make this an edit in place so can easily assign to nested/child questions...right now can only assign to question group or a standalone question.  This is to support the data visualizations in WSM.
-    - if params[:action] == "edit"
-      %br/
-      - if !question.is_a?(QuestionGroup) && question.part_of_group?
-        %label Data Export Identifier
-        %br/
-        = text_field_tag "question[question_group_attributes][data_export_identifier]", question.question_group.data_export_identifier
-      - else
-        = f.input :data_export_identifier
-
-    %br/
-    %br/
     .question_type.row.section_top_question_type
     %br/
     .question_type.row
