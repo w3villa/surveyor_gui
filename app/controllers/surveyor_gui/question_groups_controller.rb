@@ -71,7 +71,7 @@ class SurveyorGui::QuestionGroupsController < ApplicationController
         redirect_to "/companies/courses/#{params[:question_group][:course_id]}/lessons/#{params[:question_group][:lesson_id]}/topics/#{params[:question_group][:topic_id]}/topic-quiz/edit/#{SurveySection.find(params[:question_group][:survey_section_id]).survey.id}"
       else
         @title = "Add Question Group"
-        render "surveyor_gui/questions/new", locals: { question: @question_group }
+        redirect_to request.referer
       end
     end
 
