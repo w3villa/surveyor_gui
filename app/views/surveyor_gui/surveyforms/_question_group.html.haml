@@ -18,7 +18,6 @@
             &nbsp
         %span.question_button_bar
           -if [:group_inline, :group_default, :repeater].include?(f.object.question_group.question_type_id)
-            =byebug
             = link_to "Edit Question", "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/survey_section/#{f.object.survey_section_id}/question_groups/#{f.object.question_group_id}/edit", class: "btn btn-primary", :target=>'_self'
           -else
             = link_to "Edit Question", "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary", :target=>'_self'
