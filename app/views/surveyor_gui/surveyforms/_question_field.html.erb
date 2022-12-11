@@ -46,7 +46,7 @@
       <%= f.input_field :dummy_answer, label: false, collection: [answer.text], :as => :radio_buttons,:class=>"hellp" %>
       <% if answer.response_class == "string" %>
         <span class="other" style="margin-left: 3.9rem;">
-          <%= f.input_field :dummy_answer,  :as=>:string, :label=>false%>
+          <%= f.input_field :dummy_answer,  :as=>:string, :label=>false,:prompt => 'Select'%>
         </span>
       <% end -%>
     <% end -%>
@@ -60,20 +60,20 @@
     <% f.object.question_group.columns.each do |column|  %>
       <%= f.input :dummy_answer, label: false,
                   :collection => f.object.answers.where('column_id=?',column.id).collect(&:text),
-                  :as => :select, :wrapper_html=>{:class=>'grid_dropdown_cell'} %>
+                  :as => :select, :wrapper_html=>{:class=>'grid_dropdown_cell'},:prompt => 'Select' %>
     <% end -%>
 
   <% when :pick_any %>
     <% f.object.answers.each do |answer| -%>
       <% if answer.is_comment==true -%>
           <span class="other comments_text">
-            <%= f.input :dummy_answer,  :as=>:string, label: answer.text %>
+            <%= f.input :dummy_answer,  :as=>:string, label: answer.text,:prompt => 'Select' %>
           </span>
       <% else -%>
         <%= f.input_field :dummy_answer_array, label: (f.object.repeater? ? answer.text : false), collection: [answer.text], :as => :check_boxes %>
         <% if answer.response_class == "string" %>
           <span class="other">
-            <%= f.input_field :dummy_answer,  :as=>:string, :label=> false%>
+            <%= f.input_field :dummy_answer,  :as=>:string, :label=> false,:prompt => 'Select'%>
           </span>
         <% end -%>
       <% end -%>

@@ -436,14 +436,7 @@ function application_js_code(){
         else {
 
             var question_group_clause = "/new";
-            var redirect_url          = surveyor_gui_mount_point + "question_groups" + question_group_clause + "?survey_section_id=" +
-                survey_section_id + "&text=" + text +
-                "&display_order=" + display_order +
-                "&question_id=" + question_id +
-                "&question_type_id=" + question_type_id +
-                "&lesson_id=" + lesson_id +
-                "&course_id=" + course_id +
-                "&topic_id=" + topic_id
+            var redirect_url          = "/companies" + "/courses/" + course_id + "/lessons/" + lesson_id + "/topics/" + topic_id + "/quiz" + "/survey_section/" + survey_section_id + "/display_order/" + display_order + "/question_type/" + question_type_id + "/question_groups/" + "new"
 
             prev_question_id = new URLSearchParams(window.location.search).get('prev_question_id');
 
