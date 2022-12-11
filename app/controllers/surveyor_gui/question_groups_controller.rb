@@ -84,8 +84,8 @@ class SurveyorGui::QuestionGroupsController < ApplicationController
 
     if @question_group.update(question_group_params)
 
-      redirect_to surveyor_gui.edit_surveyform_url(@survey_section.survey)
-
+      redirect_to "/companies/courses/#{params[:question_group][:course_id]}/lessons/#{params[:question_group][:lesson_id]}/topics/#{params[:question_group][:topic_id]}/topic-quiz/edit/#{SurveySection.find(params[:question_group][:survey_section_id]).survey.id}"
+      
       #If a nested question is destroyed, the Question model performs a cascade delete
       #on the parent QuestionGroup (stuck with this behaviour as it is a Surveyor default).
       #Need to check for this and restore question group.

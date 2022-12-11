@@ -375,11 +375,17 @@ function application_js_code(){
         here = $(this);
         var render_grid_partial_url = $("#render_grid_partial_url").data("render_grid_partial_url");
         index = typeof index !== 'undefined' ? index : null;
+        var topic_id = $('input[id$="topic_id"]').val();
+        var lesson_id = $('input[id$="lesson_id"]').val();
+        var course_id = $('input[id$="course_id"]').val();
         $.get(
             render_grid_partial_url + "?id="
             + $(this).closest('.questions').find('input#question_id').val()
             + "&question_type_id="+question_type
             + "&index=" + parseInt(index)
+            + "&course_id=" + course_id
+            + "&lesson_id=" + lesson_id
+            + "&topic_id=" + topic_id
             ,
             function(data){
                 here.html(data);
@@ -419,6 +425,10 @@ function application_js_code(){
         var question_group_id = $('.questions').find('input[id*="question_group_id"]').val();
         var question_type_id = $('div.question_type input[id*="question_type_id"]:checked').val();
         var prev_question_id;
+        var topic_id = $('input[id$="topic_id"]').val();
+        var lesson_id = $('input[id$="lesson_id"]').val();
+        var course_id = $('input[id$="course_id"]').val();
+        console.log("survey_section_id",survey_section_id);
 
         if (question_group_id != undefined && question_group_id != "")  {
             var question_group_clause = "/"+question_group_id+"/edit";
@@ -430,7 +440,10 @@ function application_js_code(){
                 survey_section_id + "&text=" + text +
                 "&display_order=" + display_order +
                 "&question_id=" + question_id +
-                "&question_type_id=" + question_type_id
+                "&question_type_id=" + question_type_id +
+                "&lesson_id=" + lesson_id +
+                "&course_id=" + course_id +
+                "&topic_id=" + topic_id
 
             prev_question_id = new URLSearchParams(window.location.search).get('prev_question_id');
 
@@ -443,6 +456,10 @@ function application_js_code(){
     }
 
     $.fn.render_group_inline_fields_partial = function (add_row){
+        var survey_section_id = $('input[id$="survey_section_id"]').val();
+        var topic_id = $('input[id$="topic_id"]').val();
+        var lesson_id = $('input[id$="lesson_id"]').val();
+        var course_id = $('input[id$="course_id"]').val();
         here = $(this);
         var render_group_inline_partial_url = $("#render_group_inline_partial_url").data("render_group_inline_partial_url");
         var survey_section_id = $('input#question_group_survey_section_id').val();
@@ -459,6 +476,11 @@ function application_js_code(){
             render_group_inline_partial_url + "?id="
             + last_question.val() +
             "&display_order=" + display_order +
+            "&lesson_id=" + lesson_id +
+            "&topic_id=" + topic_id +
+            "&course_id=" + course_id +
+            "&survey_section_id=" + survey_section_id +
+
             option,
             function(data){
                 if (add_row == true) {

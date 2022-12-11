@@ -10,9 +10,9 @@ module SurveyorGui
 
         base.send :has_many, :columns
         base.send :has_one, :dependency, dependent: :destroy
-        base.send :belongs_to, :course
-        base.send :belongs_to, :lesson
-        base.send :belongs_to, :topic
+        base.send :belongs_to, :course, optional: true
+        base.send :belongs_to, :lesson, optional: true
+        base.send :belongs_to, :topic, optional: true
         base.send :belongs_to, :survey_section, optional: true
         base.send :accepts_nested_attributes_for, :questions, :allow_destroy => true
         base.send :accepts_nested_attributes_for, :columns,  :allow_destroy => true

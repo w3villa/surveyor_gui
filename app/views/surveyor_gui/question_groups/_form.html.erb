@@ -7,9 +7,9 @@
             <%= qg.hidden_field :id %>
             <%= qg.hidden_field :display_type %>
             <%= qg.hidden_field :question_id %>
-            <%= qg.hidden_field :topic_id ,value: (@survey_section.survey.topic_id).to_i%>
-            <%= qg.hidden_field :lesson_id ,value: (@survey_section.survey.topic.lesson_id).to_i%>
-            <%= qg.hidden_field :course_id ,value:(  @survey_section.survey.topic.lessons.first.course_id).to_i%>
+            <%= q.hidden_field :topic_id ,value: params[:topic_id].to_i%>
+            <%= q.hidden_field :lesson_id ,value: params[:lesson_id].to_i%>
+            <%= q.hidden_field :course_id ,value: params[:course_id].to_i%>
             <%= qg.input :survey_section_id, as: :hidden, input_html: { value: @survey_section_id }%>
 
             <%= qg.label :Question, :input_html=>{:size=>'15'} %>
