@@ -36,8 +36,6 @@
     = f.input :is_mandatory, :label => false, :as=>:boolean
 
     -# TODO May want to make this an edit in place so can easily assign to nested/child questions...right now can only assign to question group or a standalone question.  This is to support the data visualizations in WSM.
-    .question_type.row.section_top_question_type
-    %br/
     .question_type.row
       .col-md-3
         = f.input :question_type_id,
