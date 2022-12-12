@@ -17,6 +17,7 @@ module SurveyorGui
         base.send :accepts_nested_attributes_for, :questions, :allow_destroy => true
         base.send :accepts_nested_attributes_for, :columns,  :allow_destroy => true
         base.send :accepts_nested_attributes_for, :dependency, :reject_if => lambda { |d| d[:rule].blank?}, :allow_destroy => true
+        base.send :before_save, :is_mandatory_require
       end
 
       def question_type_id
@@ -53,6 +54,12 @@ module SurveyorGui
 
       def question_id
         self.questions.first.id if self.questions.first
+      end
+
+      def is_mandatory_require
+        if self.is_mandatory == "1"
+          questions.first.is_mandatory = true
+        end
       end
 
       #def controlling_questions in QuestionAndGroupSharedMethods
