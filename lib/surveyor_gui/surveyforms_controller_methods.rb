@@ -85,18 +85,14 @@ module SurveyorGui
       @surveyform = Surveyform.find(params[:id])
 
       if @surveyform.response_sets.count > 0
-        flash[:error] = 'This survey has responses and can not be deleted'
+        redirect_to request.referer
+        flash[:notice] = 'This survey has responses and can not be deleted'
       else
         @surveyform.destroy
-
-        if @surveyform.destroyed?
-          flash[:notice] = "Survey Deleted Successfully."
-        else
-          flash[:error] = 'Survey could not be deleted.'
-        end
+        redirect_to request.referer
+        flash[:notice] = 'Survey Deleted Successfully'
       end
 
-      redirect_to request.referer
     end
 
     def replace_form
