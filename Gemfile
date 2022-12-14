@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'surveyor', git: "https://github.com/w3villa-deepanshu/surveyor.git", branch: 'update_astrick' ,ref: "17c27d675048ce21952749df8ebfe4ca19ef5d29"
+gem 'surveyor', git: "https://github.com/w3villa-deepanshu/surveyor.git", branch: 'update_astrick' ,ref: "2927119f780b906fb2dc35502099c2fcfb062f45"
 
 gem 'sprockets', '~> 3.7'
 
