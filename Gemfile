@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'surveyor', git: "https://github.com/MichaelMatheis/surveyor.git", branch: 'lrs_integration'
+gem 'surveyor', git: "https://github.com/w3villa-deepanshu/surveyor.git", branch: 'update_asterisk_sign',ref: 'da53d43c725119fe6507c1495a3cf7b533375aae'
 
 gem 'sprockets', '~> 3.7'
 
