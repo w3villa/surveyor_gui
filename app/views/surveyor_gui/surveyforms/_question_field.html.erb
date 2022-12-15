@@ -99,7 +99,7 @@
 
   <% when :label -%>
      <span class='actual-question' data-question-id='<%=f.object.id %>' style="margin-left: 3.5em;">
-     <%= f.object.text %>
+     <%= f.object.text.to_s.html_safe %>
      </span>
 
   <% when  :string -%>
