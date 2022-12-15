@@ -6,6 +6,12 @@
     - if !params[:course_id]   
       - if @surveyform.id
         .span{style: "float: right"}
+          %input.btn.btn-info{:onclick => "preview_cbox('#{surveyor_gui.survey_url(@surveyform.id)}',
+              #{@surveyform.id});", :type => "button", :value => "Preview Survey"}/
+          %input.btn.btn-info{:onclick => "preview_cbox('#{surveyor_gui.preview_response_url(@surveyform.id)}',
+              #{@surveyform.id});", :type => "button", :value => "Preview Response"}/
+          %input.btn.btn-info{:onclick => "preview_cbox('#{surveyor_gui.preview_report_url(@surveyform.id)}',
+              #{@surveyform.id});", :type => "button", :value => "Preview Report"}/
   
       - if @surveyform.id
         = link_to "Back To Survey  |  ", surveyor_gui.surveyform_path(@surveyform), class: "btn-link"
@@ -40,6 +46,16 @@
 
     .sections{"data-survey_locked" => @survey_locked, class: ("sortable_sections" unless params[:action] == "show")}
       = render "survey_section_fields", :s => builder , :f => f
+
+:javascript
+  function preview_cbox(url, id) {
+    $.colorbox({width:"90%",
+                height:"90%",
+                scrolling:true,
+                iframe:true,
+                href: url + '?suppress_header=true&survey_id='+ id,
+                opacity:.3});
+  }
 
 :css
   .ui-datepicker{

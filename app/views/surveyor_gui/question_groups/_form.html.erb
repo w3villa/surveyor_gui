@@ -7,9 +7,6 @@
             <%= qg.hidden_field :id %>
             <%= qg.hidden_field :display_type %>
             <%= qg.hidden_field :question_id %>
-            <%= q.hidden_field :topic_id ,value: params[:topic_id].to_i%>
-            <%= q.hidden_field :lesson_id ,value: params[:lesson_id].to_i%>
-            <%= q.hidden_field :course_id ,value: params[:course_id].to_i%>
             <%= qg.input :survey_section_id, as: :hidden, input_html: { value: @survey_section_id }%>
 
             <%= qg.label :Question, :input_html=>{:size=>'15'} %>
@@ -17,7 +14,7 @@
             <span class='fl'>
         <strong>Mandatory?</strong>
       </span>
-            <%= qg.input :is_mandatory, :label => false, :as=>:boolean%>
+            <%= qg.input :is_mandatory, :label => false, :as=>:boolean, :wrapper_html=>{:class=>'fl notfirst'}%>
             <br />
             <br />
             <strong>Question Type</strong><br/>

@@ -16,9 +16,7 @@ module SurveyorGui
                   :grid_columns_textbox, :grid_rows_textbox, :omit_text, :omit, :other, :other_text, :is_comment, :comments, :comments_text,
                   :dynamic_source, :modifiable, :report_code, :question_group_attributes if
           defined? ActiveModel::MassAssignmentSecurity
-        base.send :belongs_to, :course, optional: true
-        base.send :belongs_to, :lesson, optional: true
-        base.send :belongs_to, :topic, optional: true
+
         base.send :belongs_to, :survey_section, optional: true
         base.send :has_many, :responses
         base.send :has_many, :dependency_conditions, :through=>:dependency, :dependent => :destroy

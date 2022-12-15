@@ -19,7 +19,7 @@
               = render "column", c: c, d: d
         .row
           .col-md-4
-            = c.input :operator, :collection => @operators, :label=>"Condition *", :include_blank => false
+            = c.input :operator, :collection => @operators, :label=>"Condition", :include_blank => false
           .col-md-7.answer_field
             %label Answer
             .dependency_text
@@ -36,7 +36,3 @@
               = c.input :answer_id, :collection => Answer.where('question_id=?',c.object.question_id).map{|a| [a.text,a.id]}, :label=>false, :include_blank => false, :input_html => {:style=>"max-width:18em;"}
           .col-md-1
             = link_to_remove_tbody "remove", c
-:css
-  abbr{
-    display: none;
-  }

@@ -6,7 +6,7 @@
 
             <%if params[:question_id] || params[:question_group_id] %>
                 <%if params[:course_id] %>
-                    <%= link_to "Back to Questions", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/topic-quiz/edit/#{@survey.id}", class: "btn btn-success mb-4", style: "float: right;"%>
+                    <%= link_to "Back to Questions", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/topic-quiz/#{@survey.id}/reports", class: "btn btn-success mb-4", style: "float: right;"%>
                 <%else %>
                     <p>
                         <%= link_to "<< Back to Questions", report_path(@survey) %>
