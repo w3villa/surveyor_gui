@@ -4,9 +4,6 @@
 
   .row
     .col-md-6
-      = f.hidden_field :topic_id ,value: params[:topic_id].to_i
-      = f.hidden_field :lesson_id ,value: params[:lesson_id].to_i
-      = f.hidden_field :course_id ,value: params[:course_id].to_i.to_i
       = f.input :grid_columns_textbox, :as => :text, :wrapper_html => {:class=>'answers_collection'}, :label => "Columns: <span class='grid_textbox_hint'>add each column as a new line</span>".html_safe
 
     .col-md-6

@@ -32,26 +32,26 @@ module SurveyorGui
 
     def edit
       @surveyform = Surveyform.where(:id=>params[:id]).includes(:survey_sections).first
-      topic = params[:topic_id].to_i
-      if @surveyform.topic_id.eql?(topic)
+      @survey_locked=false
       #unfortunately, request.referrer does not seem to capture parameters. Need to add explicitly.
       #don't edit the format of a non template survey that has responses. could cause unpredictable results
-      # @surveyform.response_sets.where('test_data=?',true).map{|r| r.destroy}
+      @surveyform.response_sets.where('test_data=?',true).map{|r| r.destroy}
+      if !@surveyform.template && @surveyform.responses.count>0
+        # @survey_locked=true
+        flash.now[:error] = "STOP!! Responses have already been collected for this survey, therefore modifications to anything other than simple text may result in data corruption.  PROCEED WITH CAUTION!!"
+      end
       @title = "Edit "+ (@surveyform.template ? 'Template' : 'Survey')
       @surveyform.survey_sections.build if @surveyform.survey_sections.blank?
       @question_no = 0
       @url = "update"
       @topic_id = @surveyform.topic_id
-    else
-      flash[:notice] = "Quiz not belongs to you"
-      redirect_to '/'
-    end
     end
 
     def create
       @surveyform = Surveyform.new(surveyforms_params.merge(topic_id: surveyforms_params[:topic_id], user_id: @current_user.nil? ? @current_user : @current_user.id))
       if @surveyform.save
-        flash[:notice] = "Survey Created Successfully."
+
+        flash[:notice] = "Successfully created survey."
         @title = "Edit Survey"
         @question_no = 0
         redirect_to edit_surveyform_path(@surveyform.id)
@@ -64,7 +64,7 @@ module SurveyorGui
       @title = "Update Survey"
       @surveyform = Surveyform.includes(:survey_sections).find(params[:surveyform][:id])
       if @surveyform.update(surveyforms_params)
-        flash[:notice] = "Surveyfrom Updated Successfully."
+        flash[:notice] = "Successfully updated surveyform."
         # redirect_to edit_surveyform_path(@surveyform.id)
         redirect_to request.referer
       else
@@ -85,14 +85,18 @@ module SurveyorGui
       @surveyform = Surveyform.find(params[:id])
 
       if @surveyform.response_sets.count > 0
-        redirect_to request.referer
-        flash[:notice] = 'This survey has responses and can not be deleted'
+        flash[:error] = 'This survey has responses and can not be deleted'
       else
         @surveyform.destroy
-        redirect_to request.referer
-        flash[:notice] = 'Survey Deleted Successfully'
+
+        if @surveyform.destroyed?
+          flash[:notice] = "Successfully deleted survey."
+        else
+          flash[:error] = 'Survey could not be deleted.'
+        end
       end
 
+      redirect_to surveyforms_url
     end
 
     def replace_form

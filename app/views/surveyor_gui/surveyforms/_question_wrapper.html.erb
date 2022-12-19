@@ -86,9 +86,17 @@
     <% if !@survey_locked && (f.object.modifiable?) -%>
 
         <div class="question_buttons_bottom">
-            <button type="button" id="paste_question" class="btn btn-primary paste-question" style="display: none"
-                    data-question-id="<%=f.object.id%>"
-            >Paste Question</button>
+
+            <%= link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: f.object.survey_section.id, prev_question_id: f.object.id), class: "cut btn btn-primary add-question" , :target=>'_self' %>
+
+
+
+                <button type="button" id="paste_question" class="btn btn-primary paste-question" style="display: none"
+                        data-question-id="<%=f.object.id%>"
+                >Paste Question</button>
+
+
+
         </div>
 
     <% end %>
