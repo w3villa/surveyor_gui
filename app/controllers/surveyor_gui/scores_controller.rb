@@ -15,7 +15,7 @@ class SurveyorGui::ScoresController < ApplicationController
     update_object = @question
     update_params = question_params
 
-    if update_object.update_attributes(update_params)
+    if update_object.update(update_params)
       @question_no = 0
       render partial: "surveyor_gui/surveyforms/question_section" , :layout=> false
 
@@ -63,7 +63,7 @@ class SurveyorGui::ScoresController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:survey_section_id, :correct_feedback, :incorrect_feedback, answers_attributes: [ :id, :weight ])
+    params.require(:question).permit(:survey_section_id, :correct_answer_id, :correct_feedback, :incorrect_feedback, answers_attributes: [ :id, :weight ])
   end
 
   def question_group_params

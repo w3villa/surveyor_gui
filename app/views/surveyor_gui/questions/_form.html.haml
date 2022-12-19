@@ -4,6 +4,7 @@
     = f.error_messages
     = f.hidden_field :id
     = f.hidden_field :display_type
+    = hidden_field_tag :prev_question_id, params[:prev_question_id] if params[:prev_question_id].present?
 
     - if question.is_a? Question
       = f.hidden_field :display_order, class: "question-display-order"
@@ -11,37 +12,30 @@
       = f.hidden_field :pick
       = f.hidden_field :modifiable
       = f.hidden_field :question_group_id
-      = hidden_field_tag :prev_question_id, params[:prev_question_id]
+      = f.hidden_field :topic_id ,value: (@survey_section.survey.topic_id).to_i
+      = f.hidden_field :lesson_id ,value: (@survey_section.survey.topic.lesson_id).to_i
+      = f.hidden_field :course_id ,value:(  @survey_section.survey.topic.lessons.first.course_id).to_i
 
     - if question.is_a? QuestionGroup
 
       = hidden_field_tag "converted_question_id", params[:question_id]
+      = f.hidden_field :topic_id ,value: (@survey_section.survey.topic_id).to_i
+      = f.hidden_field :lesson_id ,value: (@survey_section.survey.topic.lesson_id).to_i
+      = f.hidden_field :course_id ,value:(  @survey_section.survey.topic.lessons.first.course_id).to_i
 
       = f.input :survey_section_id, as: :hidden, input_html: { value: @survey_section_id }
 
       - if question.question_type_id == :group_default
         = f.hidden_field :question_id
 
-    = f.input :text , :label => "Question", :input_html=>{:size=>'55', value: adjusted_text(question), class: "tinymce"}
+
+    = f.input :text , :label => "Question * ", :input_html=>{:size=>'55', value: adjusted_text(question), class: "tinymce"}
 
     %span.fl
-      %strong Mandatory?
-    = f.input :is_mandatory, :label => false, :as=>:boolean, :wrapper_html=>{:class=>'fl notfirst'}
+      %strong.mr-4 Mandatory?
+    = f.input :is_mandatory, :label => false, :as=>:boolean
 
     -# TODO May want to make this an edit in place so can easily assign to nested/child questions...right now can only assign to question group or a standalone question.  This is to support the data visualizations in WSM.
-    - if params[:action] == "edit"
-      %br/
-      - if !question.is_a?(QuestionGroup) && question.part_of_group?
-        %label Data Export Identifier
-        %br/
-        = text_field_tag "question[question_group_attributes][data_export_identifier]", question.question_group.data_export_identifier
-      - else
-        = f.input :data_export_identifier
-
-    %br/
-    %br/
-    %strong Question Type
-    %br/
     .question_type.row
       .col-md-3
         = f.input :question_type_id,
@@ -52,18 +46,18 @@
           collection: question_type_subset([:pick_any]) ,
           :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
 
-      .col-md-3
-        = f.input :question_type_id,
-          collection: question_type_subset([:dropdown, :string, :number, :stars, :label, :box]) ,
-          :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
-      .col-md-3
-        = f.input :question_type_id,
-          collection: question_type_subset([:date, :datetime, :time, :slider, :group_default ]) ,
-          :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
-      .col-md-3
-        = f.input :question_type_id,
-          collection: question_type_subset([:file, :grid_one, :grid_any, :grid_dropdown, :group_inline, :repeater]) ,
-          :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
+      -# .col-md-3
+      -#   = f.input :question_type_id,
+      -#     collection: question_type_subset([:dropdown, :string, :number, :stars, :label, :box]) ,
+      -#     :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
+      -# .col-md-3
+      -#   = f.input :question_type_id,
+      -#     collection: question_type_subset([:date, :datetime, :time, :slider, :group_default ]) ,
+      -#     :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
+      -# .col-md-3
+      -#   = f.input :question_type_id,
+      -#     collection: question_type_subset([:file, :grid_one, :grid_any, :grid_dropdown, :group_inline, :repeater]) ,
+      -#     :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
     %br/
     #answer_choice
       - if @question.is_a? Question
@@ -78,6 +72,17 @@
         = f.input :report_code, :label=>'Report Code', :label_html=>{:style=>'width:10em;'},:hint=>'Use this code to uniquely identify application data driven questions for reporting.'
         %br/
     %br/
-  .buttons
+  .buttons.ml-4.question_buttons_bottom
     = f.button :submit, 'Save Changes', data: { disable_with: "Please wait..." }, class: "btn btn-primary"
-    = link_to "Cancel", surveyor_gui.edit_surveyform_url(@survey)
+    = link_to "Cancel", surveyor_gui.edit_surveyform_url(@survey), class: "btn btn-danger ml-2"
+
+:css
+  abbr{
+    display:none;
+  }
+  .fl strong{
+    margin-right: 5px;
+  }
+  .buttons.ml-4.question_buttons_bottom {
+    padding-bottom: 20px !important;
+  }

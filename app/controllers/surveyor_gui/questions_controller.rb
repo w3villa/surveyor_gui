@@ -56,7 +56,7 @@ class SurveyorGui::QuestionsController < ApplicationController
         #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
         # render :inline => '<div id="cboxQuestionId">'+@question.id.to_s+'</div>', :layout => 'surveyor_gui/surveyor_gui_blank'
 
-        redirect_to surveyor_gui.edit_surveyform_url(@question.survey_section.survey)
+        redirect_to "/companies/courses/#{params[:question][:course_id]}/lessons/#{params[:question][:lesson_id]}/topics/#{params[:question][:topic_id]}/topic-quiz/edit/#{@question.survey_section.surveyform.id}"
 
       else
         @title = "Add Question"
@@ -74,11 +74,11 @@ class SurveyorGui::QuestionsController < ApplicationController
   def update
     @title = "Update Question"
     @question = Question.includes(:answers).find(question_params[:id])
-    if @question.update_attributes(question_params)
+    if @question.update(question_params)
       @question.answers.each_with_index {|a, index| a.destroy if index > 0} if @question.pick == 'none'
 
       #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
-      redirect_to surveyor_gui.edit_surveyform_url(@question.survey_section.survey)
+      redirect_to "/companies/courses/#{params[:question][:course_id]}/lessons/#{params[:question][:lesson_id]}/topics/#{params[:question][:topic_id]}/topic-quiz/edit/#{@question.survey_section.surveyform.id}"
     else
       @survey_section = @question.survey_section
       @survey = Survey.find(@survey_section.survey_id)

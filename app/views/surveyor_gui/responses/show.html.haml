@@ -13,7 +13,7 @@
           %div{class: q.surveyresponse_class(@response_sets)}
             %div{class: q.repeater? ? "repeater" : "non_repeater"}
               - if q.part_of_group?
-                - @question_group = @question_group || QuestionGroupTracker.new(q.question_group)
+                - @question_group = @question_group || QuestionGroupTracker.new(q.question_group.id)
                 - if @question_group.check_for_new_group(q)
                   - if ["default", "inline", "repeater", "grid"].include? q.question_group.display_type
                     %table
@@ -39,4 +39,10 @@
                 %table
                   = render "surveyor_gui/shared/question_number", q: q
                   = render "survey_results", q: q 
-      = link_to "back", :back
+      -if params[:lesson_id]
+        = link_to "back", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/#{params[:user_id]}/report", class: "btn btn-primary"
+      -elsif params[:profile_id]
+        = link_to "back", "/companies/users/#{params[:course_id]}/topic_comments?profile_id=#{params[:profile_id]}", class: "btn btn-primary"
+
+      -else
+        = link_to "back", :back

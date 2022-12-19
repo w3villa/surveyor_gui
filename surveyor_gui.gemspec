@@ -20,14 +20,14 @@ Gem::Specification.new do |s|
   # s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'rails', '~> 5.2'
+  s.add_dependency 'rails', '~> 6.1'
   s.add_dependency 'dynamic_form', '~> 1.1.4'
   s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'bootstrap-sass', '~> 3.3'
   s.add_dependency 'formtastic', '~> 3.1'
 
-  s.add_development_dependency "sqlite3", '~> 1.3.0'
+  s.add_development_dependency "mysql2"
 
   s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'uglifier', '>= 1.0.3'
@@ -36,13 +36,16 @@ Gem::Specification.new do |s|
 
   # tests fail with capybara 3...lots of custom rspec shenanigans that result in many failing tests...failing rspec
   # customizations will need to be addressed before upgrading :(
-  s.add_development_dependency('capybara', '~> 2.3')
+  s.add_development_dependency('capybara')
+  s.add_development_dependency('capybara-screenshot')
+  s.add_development_dependency('selenium-webdriver')
+  s.add_development_dependency('webdrivers', '~> 4.0')
   s.add_development_dependency('launchy', '~> 2.4.2')
   s.add_development_dependency('poltergeist')
   s.add_development_dependency('puma')
   s.add_development_dependency('capybara-webkit', "= 1.15.1")
   s.add_development_dependency('json_spec', '~> 1.1.1')
-  s.add_development_dependency('factory_girl', '~> 4.4.0')
+  s.add_development_dependency('factory_bot_rails')
   s.add_development_dependency('database_cleaner')
   s.add_development_dependency('rspec-retry', "= 0.4.4")
   s.add_development_dependency('phantomjs', '~> 2.1')
