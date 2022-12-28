@@ -110,6 +110,15 @@ module SurveyorGui
       end
     end
 
+    def checkbox_true(f)
+      Answer.where('question_id=?',f)      
+   end
+
+   def checkbox_values(question)
+     correct_answer_id = JSON.parse(question.correct_answer_id) 
+     correct_answer_id.reject(&:empty?).map(&:to_i)
+   end
+
   end
 
   class SurveyCloneFactory

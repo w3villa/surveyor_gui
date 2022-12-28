@@ -17,7 +17,19 @@
         %hr
         %h4 Select Correct option
         .dependency_editor{style: "padding-left: 19px;"}
-          = f.input_field :correct_answer_id, :collection => Answer.where('question_id=?',@question.id).map{|a| [a.text,a.id]}, :as => :radio_buttons 
+          - if f.object.pick == "one"
+            = f.input_field :correct_answer_id, :collection => Answer.where('question_id=?',@question.id).map{|a| [a.text,a.id]}, :as => :radio_buttons
+          - else
+            = f.collection_check_boxes(:correct_answer_id,checkbox_true(@question.id), :id, :text) do |_data|
+              - if checkbox_values(f.object).include?(_data.object.id)
+                %span.radio
+                  = _data.check_box(checked: true) 
+                  = _data.label(class: "check_box")
+              - else
+                %span.radio
+                  = _data.check_box(checked: false)
+                  = _data.label(class: "check_box")
+
         %br
         .dependency_editor
 
