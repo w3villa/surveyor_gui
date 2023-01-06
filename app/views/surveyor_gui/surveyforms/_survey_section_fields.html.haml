@@ -42,7 +42,6 @@
             - if !@survey_locked && s.object.modifiable
               .button_bar_outer
                 .section_button_bar_bottom_inner
-                  %button.btn.btn-primary#add_section{"data-url" => surveyor_gui.new_survey_section_path(survey_id: f.object.id, prev_section_id: s.object.id), :type => "button"} Add Section
                   - if session[:cut_section]
                     %button.btn.btn-primary#paste_section{"data-paste_section_surveyform_url" => surveyor_gui.paste_section_surveyform_url(:survey_section_id => s.object.id,:id => f.object.id), :type => "button"} Paste Section
     - else
