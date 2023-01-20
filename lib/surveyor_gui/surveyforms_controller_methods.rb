@@ -7,7 +7,7 @@ module SurveyorGui
 
     def index
       context = Surveyform
-      label = "All Surveys"
+      label = "All Quiz"
 
       if params[:template]=='false'
         context = context.where('template = ?', false)
@@ -51,8 +51,8 @@ module SurveyorGui
     def create
       @surveyform = Surveyform.new(surveyforms_params.merge(topic_id: surveyforms_params[:topic_id], user_id: @current_user.nil? ? @current_user : @current_user.id))
       if @surveyform.save
-        flash[:notice] = "Survey Created Successfully."
-        @title = "Edit Survey"
+        flash[:notice] = "Quiz Created Successfully."
+        @title = "Edit Quiz"
         @question_no = 0
         redirect_to edit_surveyform_path(@surveyform.id)
       else
@@ -64,7 +64,7 @@ module SurveyorGui
       @title = "Update Survey"
       @surveyform = Surveyform.includes(:survey_sections).find(params[:surveyform][:id])
       if @surveyform.update(surveyforms_params)
-        flash[:notice] = "Surveyfrom Updated Successfully."
+        flash[:notice] = "Quiz from Updated Successfully."
         # redirect_to edit_surveyform_path(@surveyform.id)
         redirect_to request.referer
       else
@@ -75,7 +75,7 @@ module SurveyorGui
     end
 
     def show
-      @title = "Show Survey"
+      @title = "Show Quiz"
       @survey_locked = true
       @surveyform = Surveyform.find(params[:id])
       @question_no = 0
@@ -86,11 +86,11 @@ module SurveyorGui
 
       if @surveyform.response_sets.count > 0
         redirect_to request.referer
-        flash[:notice] = 'This survey has responses and can not be deleted'
+        flash[:notice] = 'This Quiz has responses and can not be deleted'
       else
         @surveyform.destroy
         redirect_to request.referer
-        flash[:notice] = 'Survey Deleted Successfully'
+        flash[:notice] = 'Quiz Deleted Successfully'
       end
 
     end
@@ -141,7 +141,7 @@ module SurveyorGui
     end
 
     def paste_section
-      @title="Edit Survey"
+      @title="Edit Quiz"
       @question_no = 0
       if session[:cut_section]
         _continue_paste_section
@@ -223,10 +223,10 @@ module SurveyorGui
       @title = "Clone Survey"
       @surveyform = SurveyCloneFactory.new(params[:id], true).clone
       if @surveyform.save
-        flash[:notice] = "Successfully created survey, questionnaire, or form."
+        flash[:notice] = "Successfully created Quiz."
         redirect_to edit_surveyform_path(@surveyform)
       else
-        flash[:error] = "Could not clone the survey, questionnaire, or form."
+        flash[:error] = "Could not clone the Quiz."
         render :action => 'new'
       end
     end

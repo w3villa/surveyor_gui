@@ -40,9 +40,9 @@
                   = render "surveyor_gui/shared/question_number", q: q
                   = render "survey_results", q: q 
       -if params[:lesson_id]
-        = link_to "back", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/#{params[:user_id]}/report", class: "btn btn-primary"
+        = link_to "Back", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/#{params[:user_id]}/report", class: "btn btn-primary"
       -elsif params[:profile_id]
-        = link_to "back", "/companies/users/#{params[:course_id]}/topic_comments?profile_id=#{params[:profile_id]}", class: "btn btn-primary"
+        = link_to "Back", "/companies/users/#{params[:course_id]}/topic_comments?profile_id=#{params[:profile_id]}", class: "btn btn-primary"
 
       -else
-        = link_to "back", :back
+        = link_to "Back", :back
