@@ -12,9 +12,9 @@
       = f.hidden_field :pick
       = f.hidden_field :modifiable
       = f.hidden_field :question_group_id
-      = f.hidden_field :topic_id ,value: (@survey_section.survey.topic_id).to_i
-      = f.hidden_field :lesson_id ,value: (@survey_section.survey.topic.lesson_id).to_i
-      = f.hidden_field :course_id ,value:(  @survey_section.survey.topic.lessons.first.course_id).to_i
+      = f.hidden_field :topic_id ,value: params[:topic_id].to_i
+      = f.hidden_field :lesson_id ,value: params[:lesson_id].to_i
+      = f.hidden_field :course_id ,value: params[:course_id].to_i
 
     - if question.is_a? QuestionGroup
 
@@ -44,10 +44,10 @@
           collection: question_type_subset([:pick_any]) ,
           :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
 
-      -# .col-md-3
-      -#   = f.input :question_type_id,
-      -#     collection: question_type_subset([:dropdown, :string, :number, :stars, :label, :box]) ,
-      -#     :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
+        - if @survey.feedback
+          = f.input :question_type_id,
+            collection: question_type_subset([:box]) ,
+            :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
       -# .col-md-3
       -#   = f.input :question_type_id,
       -#     collection: question_type_subset([:date, :datetime, :time, :slider, :group_default ]) ,
