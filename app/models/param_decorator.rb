@@ -11,7 +11,7 @@ module ParamDecorator
   def survey_attributes
     super +
       [:title, :topic_id, :access_code, :template, :id, :user_id, :internal_title,
-       :quiz, :public, survey_sections_attributes: survey_section_attributes]
+       :quiz, :public, :feedback, survey_sections_attributes: survey_section_attributes]
   end
 
   def survey_section_attributes
