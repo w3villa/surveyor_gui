@@ -1,8 +1,12 @@
 #survey
   %h3{style: "margin-left: 8px;"}
     = @title
-    -if params[:course_id] && params[:action] == "edit"
+    -if !params[:course_id].blank? && params[:action] == "edit"
       = link_to 'Back', "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
+    -if params[:department_id] && params[:action] == "edit"
+      = link_to 'Back', "/companies/departments/#{params[:department_id]}/evaluation_form", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
+    -if @surveyform.present?
+      = link_to 'Back', "/companies/departments/#{@surveyform.department_id}/evaluation_form", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
     - if !params[:course_id]   
       - if @surveyform.id
         .span{style: "float: right"}

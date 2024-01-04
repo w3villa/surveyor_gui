@@ -9,26 +9,38 @@
   = ff.input :response_group, :input_html => { :value => rg }, :as => :quiet if q.pick != "one" && g && g.display_type == "repeater"
   - case q.pick
   - when "one"
-    = ff.input :answer_id, :as => :surveyor_radio, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
+    - if !params[:rm_id].present?
+      = ff.input :answer_id, :as => :surveyor_radio, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
     - if params[:profile_id].present? && ff.object.question.answers.last.id == a.id
       %p.employee-response-label Employee Response
       = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
+    - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
+      %p.employee-response-label Reporting Manager Response
+      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
   - when "any"
-    = ff.input :answer_id, :as => :surveyor_check_boxes, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
+    - if !params[:rm_id].present?
+      = ff.input :answer_id, :as => :surveyor_check_boxes, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
     - if params[:profile_id].present? && ff.object.question.answers.last.id == a.id
       %p.employee-response-label Employee Response
       = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
+    - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
+      %p.employee-response-label Reporting Manager Response
+      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
   - when "none"
     - if %w(date datetime time float integer string text).include? a.response_class
-      = ff.input :answer_id, :as => :quiet, :input_html => {:class => a.css_class, :value => a.id}
-      = ff.input rc_to_attr(a.response_class),
+      - if !params[:rm_id].present?
+        = ff.input :answer_id, :as => :quiet, :input_html => {:class => a.css_class, :value => a.id}
+        = ff.input rc_to_attr(a.response_class),
                   :as         => rc_to_as(a.response_class),
                   :label      => a.text_for(:pre, @render_context, I18n.locale).blank? ? false : a.text_for(:pre, @render_context, I18n.locale),
                   :hint       => a.text_for(:post, @render_context, I18n.locale),
                   :input_html => generate_pick_none_input_html(r.to_formatted_s, a.default_value_for(@render_context, I18n.locale), a.css_class, a.response_class, disabled, a.input_mask, a.input_mask_placeholder)
       - if params[:profile_id].present? && ff.object.question.answers.last.id == a.id
         %p.employee-response-label Employee Response
-        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id).first.string_value, class: a.css_class
+        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class
+      - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
+        %p.employee-response-label Reporting Manager Response
+        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class
     - elsif a.response_class=='blob'
       = ff.input :answer_id, :as => :quiet, :input_html => {:class => a.css_class, :value => a.id}
       = ff.input :blob, :as => :file, :label => false, :input_html => {"data-object-class"=>ff.object.class.name, "data-object-id"=>ff.object.id, "data-response_set_id" => @response_set.id, :required=>q.mandatory?}
