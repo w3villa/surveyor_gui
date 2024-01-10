@@ -15,6 +15,7 @@
       %p.employee-response-label Employee Response
       = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
     - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
+    
       %p.employee-response-label Reporting Manager Response
       = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
   - when "any"
