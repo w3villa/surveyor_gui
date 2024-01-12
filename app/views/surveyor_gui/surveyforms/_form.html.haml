@@ -10,10 +10,10 @@
     - if !params[:course_id]   
       - if @surveyform.id
         .span{style: "float: right"}
-  
-      - if @surveyform.id
-        = link_to "Back To Survey  |  ", surveyor_gui.surveyform_path(@surveyform), class: "btn-link"
-      = link_to "View All Surveys", surveyor_gui.surveyforms_path, class: "btn-link"
+      - if !params[:department_id].present? && !@surveyform.department_id.present?
+        - if @surveyform.id
+          = link_to "Back To Survey  |  ", surveyor_gui.surveyform_path(@surveyform), class: "btn-link"
+          = link_to "View All Surveys", surveyor_gui.surveyforms_path, class: "btn-link"
 
   = simple_form_for [surveyor_gui, @surveyform] do |f|
     = f.error_messages

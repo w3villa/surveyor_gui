@@ -44,9 +44,10 @@
           collection: question_type_subset([:pick_any]) ,
           :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
 
-        = f.input :question_type_id,
-          collection: question_type_subset([:string, :number, :label, :box]) ,
-          :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
+        - unless params[:course_id].present?
+          = f.input :question_type_id,
+            collection: question_type_subset([:string, :number, :label, :box, :stars]) ,
+            :as => :radio_buttons , :wrapper_html=>{:size=>'60'}, :label => false, include_hidden: false
       -# .col-md-3
       -#   = f.input :question_type_id,
       -#     collection: question_type_subset([:date, :datetime, :time, :slider, :group_default ]) ,

@@ -12,23 +12,24 @@
     - if !params[:rm_id].present?
       = ff.input :answer_id, :as => :surveyor_radio, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
     - if params[:profile_id].present? && ff.object.question.answers.last.id == a.id
-      %p.employee-response-label Employee Response
-      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
+      %label.employee-response-label (By Employee)
+      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class, readonly: true
     - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
-    
-      %p.employee-response-label Reporting Manager Response
-      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
+      %label.employee-response-label (By Reporting Manager)
+      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class, readonly: true
   - when "any"
+    - if ff.object.question.answers.first.id == a.id && !params[:rm_id].present?
+      %p.check-box (More than one answer can be chosen)
     - if !params[:rm_id].present?
       = ff.input :answer_id, :as => :surveyor_check_boxes, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
     - if params[:profile_id].present? && ff.object.question.answers.last.id == a.id
-      %p.employee-response-label Employee Response
-      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
+      %label.employee-response-label (By Employee)
+      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class, readonly: true
     - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
-      %p.employee-response-label Reporting Manager Response
-      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class
+      %label.employee-response-label (By Reporting Manager)
+      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class, readonly: true
   - when "none"
-    - if %w(date datetime time float integer string text).include? a.response_class
+    - if %w(date datetime time float integer string text stars).include? a.response_class
       - if !params[:rm_id].present?
         = ff.input :answer_id, :as => :quiet, :input_html => {:class => a.css_class, :value => a.id}
         = ff.input rc_to_attr(a.response_class),
@@ -37,11 +38,11 @@
                   :hint       => a.text_for(:post, @render_context, I18n.locale),
                   :input_html => generate_pick_none_input_html(r.to_formatted_s, a.default_value_for(@render_context, I18n.locale), a.css_class, a.response_class, disabled, a.input_mask, a.input_mask_placeholder)
       - if params[:profile_id].present? && ff.object.question.answers.last.id == a.id
-        %p.employee-response-label Employee Response
-        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class
+        %label.employee-response-label (By Employee)
+        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class, readonly: true
       - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
-        %p.employee-response-label Reporting Manager Response
-        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class
+        %label.employee-response-label (By Reporting Manager)
+        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"]).last.responses.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class, readonly: true
     - elsif a.response_class=='blob'
       = ff.input :answer_id, :as => :quiet, :input_html => {:class => a.css_class, :value => a.id}
       = ff.input :blob, :as => :file, :label => false, :input_html => {"data-object-class"=>ff.object.class.name, "data-object-id"=>ff.object.id, "data-response_set_id" => @response_set.id, :required=>q.mandatory?}
@@ -52,21 +53,3 @@
     - else
       = a.text_for(nil, @render_context, I18n.locale)
   %span.help= a.help_text_for(@render_context, I18n.locale) unless g && g.display_type == "grid"
-
-:css
-  #surveyor textarea {
-    width: 50% !important;
-    height: 50px !important;
-    background-color: #c6bfbf;
-    cursor: not-allowed;
-  }
-  .employee-response-label{
-    font-weight: bold !important;
-    margin-left: 56px !important;
-  }
-  #custom_text_input{
-    margin-left: 57px !important;
-    width: 50% !important;
-    background-color: lightgrey;
-    border: 1px solid !important;
-  }
