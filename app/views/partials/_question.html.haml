@@ -24,7 +24,9 @@
           - if params[:profile_id].present?
             %label.employee-response-label (By Employee)
             %div{id: "user_response_for_rm_#{ff.object.question_id}"}
-              %div{id: "rm_response_user", data: {profile_id: params[:profile_id], response_set_id: SurveyAction.where(action_by_id: params[:profile_id],action_for_id: current_user.id,survey_id: ff.object.response_set.survey_id).last.response_set_id}}
+              - survey_action = SurveyAction.where(action_by_id: params[:profile_id], action_for_id: current_user.current_profile.id, survey_id: ff.object.response_set.survey_id).last
+              - response_set_id = survey_action&.response_set_id
+              %div{id: "rm_response_user", data: {profile_id: params[:profile_id], response_set_id: response_set_id}}
                 = ff.input :integer_value, :as => :radio, :collection => [[nil,1],[nil,2],[nil,3],[nil,4],[nil,5]], :include_blank => (renderer != :slider), :input_html => { :disabled => disabled }, wrapper_html: { class: 'star-container rm_present' }
                 - if !params[:rm_id].present?
                   %label.remarks-label Remarks
