@@ -39,7 +39,7 @@
                   :input_html => generate_pick_none_input_html(r.to_formatted_s, a.default_value_for(@render_context, I18n.locale), a.css_class, a.response_class, disabled, a.input_mask, a.input_mask_placeholder)
       - if params[:profile_id].present? && ff.object.question.answers.last.id == a.id
         %label.employee-response-label (By Employee)
-        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).&first&.responses&.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class, readonly: true
+        = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"])&.first&.responses&.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class, readonly: true
       - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
         %label.employee-response-label (By Reporting Manager)
         = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["rm_id"], survey_id: params["survey_id"])&.last&.responses&.where(question_id: ff.object.question_id)&.first&.string_value, class: a.css_class, readonly: true
