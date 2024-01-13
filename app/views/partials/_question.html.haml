@@ -30,7 +30,7 @@
                 = ff.input :integer_value, :as => :radio, :collection => [[nil,1],[nil,2],[nil,3],[nil,4],[nil,5]], :include_blank => (renderer != :slider), :input_html => { :disabled => disabled }, wrapper_html: { class: 'star-container rm_present' }
                 - if !params[:rm_id].present?
                   %label.remarks-label Remarks
-                = text_area_tag 'custom_rating_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"]).first.responses.where(question_id: ff.object.question_id).first&.text_value, class: 'custom_text_rating_input', readonly: true
+                = text_area_tag 'custom_rating_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"])&.first&.responses&.where(question_id: ff.object.question_id)&.first&.text_value, class: 'custom_text_rating_input', readonly: true
           - if params[:rm_id].present?
             %div{id: "rm-id#{params[:rm_id]}", class: "rm-response_#{ff.object.question_id}", data_src: "re-response_id#{ff.object.response_set_id}"}
             %label.employee-response-label (By Reporting Manager)
