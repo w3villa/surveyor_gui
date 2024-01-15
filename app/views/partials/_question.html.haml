@@ -34,9 +34,10 @@
           - if params[:rm_id].present?
             %div{id: "rm-id#{params[:rm_id]}", class: "rm-response_#{ff.object.question_id}", data_src: "re-response_id#{ff.object.response_set_id}"}
             %label.employee-response-label (By Reporting Manager)
-            = ff.input :integer_value, :as => :radio, :collection => [[nil,1],[nil,2],[nil,3],[nil,4],[nil,5]], :include_blank => (renderer != :slider), :input_html => { :disabled => disabled }, wrapper_html: { class: 'star-container' }
-            = text_area_tag 'custom_rating_text_input', Question.find(ff.object.question_id)&.responses.last&.text_value, class: 'custom_text_rating_input', readonly: true
-            = ff.hidden_field :response_other, class: "dynamic_source", value: @response_set.id
+            %div{id: "rm-response"}
+              = ff.input :integer_value, :as => :radio, :collection => [[nil,1],[nil,2],[nil,3],[nil,4],[nil,5]], :include_blank => (renderer != :slider), :input_html => { :disabled => disabled }, wrapper_html: { class: 'star-container' }
+              = text_area_tag 'custom_rating_text_input', Question.find(ff.object.question_id)&.responses.last&.text_value, class: 'custom_text_rating_input', readonly: true
+              = ff.hidden_field :response_other, class: "dynamic_source", value: @response_set.id
         - else
           = ff.input :answer_id, :as => :select, :collection => q.answers.map{|a| [a.text, a.id]}, :include_blank => (renderer != :slider),  :input_html => { :disabled => disabled }
     - else # :default, :inline, :inline_default
