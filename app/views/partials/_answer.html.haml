@@ -27,7 +27,7 @@
       = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"])&.first&.responses&.where(question_id: ff.object.question_id)&.map { |response| response.answer&.text }.compact.join(', '), class: a.css_class, readonly: true
     - if params[:rm_id].present? && ff.object.question.answers.last.id == a.id
       %label.employee-response-label (By Reporting Manager)
-      = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"])&.first&.responses&.where(question_id: ff.object.question_id)&.map { |response| response.answer&.text }.compact.join(', '), class: a.css_class, readonly: true
+      = text_field_tag 'custom_text_input', Question.find(ff.object.question_id).responses&.responses&.where(question_id: ff.object.question_id)&.map { |response| response.answer&.text }.compact.join(', '), class: a.css_class, readonly: true
   - when "none"
     - if %w(date datetime time float integer string text stars).include? a.response_class
       - if !params[:rm_id].present?
