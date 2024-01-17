@@ -11,7 +11,7 @@
   - when "one"
     - if !params[:rm_id].present?
       = ff.input :answer_id, :as => :surveyor_radio, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
-    - if params[:profile_id].present? && ff.object.question.answers.pluck(:id).last == a.id
+    - if params[:profile_id].present? && ff.object.question.answers.pluck(:id).last == a.id && !params[:course_id].present?
       %label.employee-response-label (By Employee)
       = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"])&.first&.responses&.where(question_id: ff.object.question_id)&.first&.answer&.text, class: a.css_class, readonly: true
     - if params[:rm_id].present? && ff.object.question.answers.pluck(:id).last == a.id
@@ -20,7 +20,7 @@
   - when "any"
     - if !params[:rm_id].present?
       = ff.input :answer_id, :as => :surveyor_check_boxes, :collection => [[a.text_for(nil, @render_context, I18n.locale), a.id]], :label => false, :input_html => {:class => a.css_class, :disabled => disabled}, :response_class => a.response_class, wrapper_html: { class: answer_result_css_class(ff.object, a, q) }
-    - if params[:profile_id].present? && ff.object.question.answers.pluck(:id).last == a.id
+    - if params[:profile_id].present? && ff.object.question.answers.pluck(:id).last == a.id && !params[:course_id].present?
       %label.employee-response-label (By Employee)
       = text_field_tag 'custom_text_input', ResponseSet.where(user_id: params["profile_id"], survey_id: params["survey_id"])&.last&.responses&.where(question_id: ff.object.question_id).map { |response| response.answer&.text }.compact.uniq.join(', '), class: a.css_class, readonly: true
     - if params[:rm_id].present? &&  ff.object.question.answers.pluck(:id).last == a.id
