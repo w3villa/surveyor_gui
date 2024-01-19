@@ -30,6 +30,9 @@
               - if params[:course_id].present?
                 .question_buttons_top
                   = link_to "Add Question", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/new/#{s.object.id}", class: "btn btn-primary add-question", :target=>'_self'
+              - elsif params[:department_id].present?
+                .question_buttons_top
+                  = link_to "Add Question", "/companies/departments/#{params[:department_id]}/evaluation-form/questions/new/#{s.object.id}", class: "btn btn-primary add-question", :target=>'_self'
               - else              
                 .question_buttons_top
                   = link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: s.object.id,id: f.object.id), class: "btn btn-primary add-question", :target=>'_self'

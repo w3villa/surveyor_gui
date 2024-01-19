@@ -33,7 +33,6 @@ module SurveyorGui
     def edit
       @surveyform = Surveyform.where(:id=>params[:id]).includes(:survey_sections).first
       topic = params[:topic_id].to_i
-      if @surveyform.topic_id.eql?(topic)
       #unfortunately, request.referrer does not seem to capture parameters. Need to add explicitly.
       #don't edit the format of a non template survey that has responses. could cause unpredictable results
       # @surveyform.response_sets.where('test_data=?',true).map{|r| r.destroy}
@@ -42,10 +41,6 @@ module SurveyorGui
       @question_no = 0
       @url = "update"
       @topic_id = @surveyform.topic_id
-    else
-      flash[:notice] = "Quiz not belongs to you"
-      redirect_to '/'
-    end
     end
 
     def create

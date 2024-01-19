@@ -55,8 +55,11 @@ class SurveyorGui::QuestionsController < ApplicationController
         @question.answers.each_with_index {|a, index| a.destroy if index > 0} if @question.pick == 'none'
         #load any page - if it has no flash errors, the colorbox that contains it will be closed immediately after the page loads
         # render :inline => '<div id="cboxQuestionId">'+@question.id.to_s+'</div>', :layout => 'surveyor_gui/surveyor_gui_blank'
-
-        redirect_to "/companies/courses/#{params[:question][:course_id]}/lessons/#{params[:question][:lesson_id]}/topics/#{params[:question][:topic_id]}/topic-quiz/edit/#{@question.survey_section.surveyform.id}"
+        if params[:question][:topic_id].eql?("0")
+          redirect_to "/companies/departments/#{@question.survey_section.surveyform.department_id}/evaluation-from/edit/#{@question.survey_section.surveyform.id}"
+        else
+          redirect_to "/companies/courses/#{params[:question][:course_id]}/lessons/#{params[:question][:lesson_id]}/topics/#{params[:question][:topic_id]}/topic-quiz/edit/#{@question.survey_section.surveyform.id}"
+        end
 
       else
         @title = "Add Question"

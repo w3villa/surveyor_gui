@@ -1,15 +1,19 @@
 #survey
   %h3{style: "margin-left: 8px;"}
     = @title
-    -if params[:course_id] && params[:action] == "edit"
+    -if !params[:course_id].blank? && params[:action] == "edit"
       = link_to 'Back', "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
+    -if params[:department_id] && params[:action] == "edit"
+      = link_to 'Back', "/companies/departments/#{params[:department_id]}/evaluation_form", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
+    -if @surveyform.present? && !params[:course_id]
+      = link_to 'Back', "/companies/departments/#{@surveyform.department_id}/evaluation_form", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
     - if !params[:course_id]   
       - if @surveyform.id
         .span{style: "float: right"}
-  
-      - if @surveyform.id
-        = link_to "Back To Survey  |  ", surveyor_gui.surveyform_path(@surveyform), class: "btn-link"
-      = link_to "View All Surveys", surveyor_gui.surveyforms_path, class: "btn-link"
+      - if !params[:department_id].present? && !@surveyform.department_id.present?
+        - if @surveyform.id
+          = link_to "Back To Survey  |  ", surveyor_gui.surveyform_path(@surveyform), class: "btn-link"
+          = link_to "View All Surveys", surveyor_gui.surveyforms_path, class: "btn-link"
 
   = simple_form_for [surveyor_gui, @surveyform] do |f|
     = f.error_messages
