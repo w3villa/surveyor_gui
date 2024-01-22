@@ -24,7 +24,7 @@
         -if params[:course_id]
           = link_to 'Back', "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
           = link_to 'Edit Quiz', "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/topic-quiz/edit/#{@surveyform.id}", class: 'btn btn-primary pull-right' 
-        - else
+        - elsif !params[:department_id].present?
           = link_to "Edit", edit_surveyform_path(@surveyform.id), class: "btn-sm btn-primary"
     - else
       .panel.panel-default

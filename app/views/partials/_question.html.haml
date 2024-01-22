@@ -43,7 +43,9 @@
             %label.employee-response-label (By Reporting Manager)
             %div{id: "rm-response"}
               = ff.input :integer_value, :as => :radio, :collection => [[nil,1],[nil,2],[nil,3],[nil,4],[nil,5]], :include_blank => (renderer != :slider), :input_html => { :disabled => disabled }, wrapper_html: { class: 'star-container' }
-              = text_area_tag 'custom_rating_text_input', Question.find(ff.object.question_id)&.responses.last&.text_value, class: 'custom_text_rating_input', readonly: true
+              - response_set_id = SurveyAction.where(action_by_id: params[:rm_id], action_for_id: params[:profile_id],survey_id: params[:survey_id])&.last&.response_set_id
+              - response_set = ResponseSet.find(response_set_id) if response_set_id.present?
+              = text_area_tag 'custom_rating_text_input', response_set&.responses&.where(question_id: ff.object.question_id)&.last&.text_value, class: 'custom_text_rating_input', readonly: true
               = ff.hidden_field :response_other, class: "dynamic_source", value: response_set_id
         - else
           = ff.input :answer_id, :as => :select, :collection => q.answers.map{|a| [a.text, a.id]}, :include_blank => (renderer != :slider),  :input_html => { :disabled => disabled }
