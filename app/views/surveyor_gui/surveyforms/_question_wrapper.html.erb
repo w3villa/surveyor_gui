@@ -61,13 +61,13 @@
                       data-url="<%= surveyor_gui.edit_dependency_url(f.object.id) %>"
               >Edit Logic</button>
 
-            <% elsif f.object.survey_section.survey.questions.count > 1 -%>
+            <% elsif f.object.survey_section.survey.questions.count > 1 && params[:course_id].present? -%>
                 <button type="button" id="add_logic" class="btn btn-primary"
                         data-url="<%= surveyor_gui.new_dependency_url(:id=>f.object.id) %>"
                 >Add Logic</button>
             <% end %>
 
-            <% if f.object.pick == "any" || (f.object.pick == "one" && f.object.display_type != "stars") -%>
+            <% if f.object.pick == "any" || (f.object.pick == "one" && f.object.display_type != "stars") && params[:course_id].present? -%>
                 <button type="button" id="scores" class="btn btn-primary add-scores" style="display: <%= @surveyform.quiz? ? 'inline' : 'none' %>;"
                         data-url="<%= surveyor_gui.edit_score_url(:id=>f.object.id) %>"
                 >Add Scores</button>
