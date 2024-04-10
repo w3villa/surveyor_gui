@@ -59,8 +59,11 @@ module SurveyorGui
       @title = "Update Survey"
       @surveyform = Surveyform.includes(:survey_sections).find(params[:surveyform][:id])
       if @surveyform.update(surveyforms_params)
-        flash[:notice] = "Quiz form updated successfully."
-        # redirect_to edit_surveyform_path(@surveyform.id)
+        if params[:department_id].present?
+          flash[:notice] = "Form updated successfully"
+        else
+          flash[:notice] = "Quiz updated successfully"
+        end
         redirect_to request.referer
       else
         flash[:error] = "Changes not saved."
@@ -70,7 +73,11 @@ module SurveyorGui
     end
 
     def show
-      @title = "Show Quiz"
+      if params[:department_id].present?
+        @title = "Show Form"
+      else
+       @title = "Show Quiz"
+      end
       @survey_locked = true
       @surveyform = Surveyform.find(params[:id])
       @question_no = 0
