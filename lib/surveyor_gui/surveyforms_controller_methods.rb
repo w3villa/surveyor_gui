@@ -81,11 +81,19 @@ module SurveyorGui
 
       if @surveyform.response_sets.count > 0
         redirect_to request.referer
-        flash[:notice] = 'This Quiz has responses and can not be deleted'
+        if params[:department_id].present?
+          flash[:notice] = 'Form has responses and can not be deleted'
+        else
+          flash[:notice] = 'Quiz has responses and can not be deleted'
+        end
       else
         @surveyform.destroy
         redirect_to request.referer
-        flash[:notice] = 'Quiz Deleted Successfully'
+        if params[:department_id].present?
+          flash[:notice] = 'Form Deleted Successfully'
+        else
+          flash[:notice] = 'Quiz Deleted Successfully'
+        end
       end
 
     end
