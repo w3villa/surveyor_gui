@@ -28,10 +28,13 @@
                 <% end %>
 
                 <span class="question_button_bar">
-
-
-            <%= link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary" %>
-
+            <% if params[:course_id].present? %> 
+                <%= link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary", :target=>'_self'%>
+            <% elsif params[:department_id].present? %>
+                <%= link_to "Edit Question",  "/companies/departments/#{params[:department_id]}/evaluation-form/questions/#{ f.object.id}/edit", class: "btn btn-primary", :target=>'_self'%>
+            <% else%>
+                <%= link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary", :target=>'_self'%>
+            <% end %>
 
 
             <button type="button" id="cut_question" class="btn btn-primary cut-question">Cut Question</button>
@@ -58,13 +61,13 @@
                       data-url="<%= surveyor_gui.edit_dependency_url(f.object.id) %>"
               >Edit Logic</button>
 
-            <% elsif f.object.survey_section.survey.questions.count > 1 -%>
+            <% elsif f.object.survey_section.survey.questions.count > 1 && params[:course_id].present? -%>
                 <button type="button" id="add_logic" class="btn btn-primary"
                         data-url="<%= surveyor_gui.new_dependency_url(:id=>f.object.id) %>"
                 >Add Logic</button>
             <% end %>
 
-            <% if f.object.pick == "any" || (f.object.pick == "one" && f.object.display_type != "stars") -%>
+            <% if f.object.pick == "any" || (f.object.pick == "one" && f.object.display_type != "stars") && params[:course_id].present? -%>
                 <button type="button" id="scores" class="btn btn-primary add-scores" style="display: <%= @surveyform.quiz? ? 'inline' : 'none' %>;"
                         data-url="<%= surveyor_gui.edit_score_url(:id=>f.object.id) %>"
                 >Add Scores</button>
@@ -85,17 +88,9 @@
     <% if !@survey_locked && (f.object.modifiable?) -%>
 
         <div class="question_buttons_bottom">
-
-            <%= link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: f.object.survey_section.id, prev_question_id: f.object.id), class: "cut btn btn-primary add-question"  %>
-
-
-
-                <button type="button" id="paste_question" class="btn btn-primary paste-question" style="display: none"
-                        data-question-id="<%=f.object.id%>"
-                >Paste Question</button>
-
-
-
+            <button type="button" id="paste_question" class="btn btn-primary paste-question" style="display: none"
+                    data-question-id="<%=f.object.id%>"
+            >Paste Question</button>
         </div>
 
     <% end %>

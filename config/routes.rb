@@ -1,4 +1,4 @@
-SurveyorGui::Engine.routes.draw do
+  SurveyorGui::Engine.routes.draw do
 
   resources :surveyforms do
     member do
@@ -60,6 +60,8 @@ SurveyorGui::Engine.routes.draw do
       get 'show_pdf'
     end
   end
+  get '/:course_id/lessons/:lesson_id/topics/:topic_id/topic-quiz/:id/reports/:question_id', to: 'reports#show', as:  :quiz_question_reports
+   
   resources :survey, only: ['show'] do
   end
   resources :responses, only: ['show', 'index', 'preview', 'destroy_all'] do

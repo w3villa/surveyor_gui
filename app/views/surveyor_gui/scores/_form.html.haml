@@ -1,9 +1,9 @@
 .modal-dialog.dependencies{:role => "document"}
   .modal-content
     .modal-header
-      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+      %button.close.close-logic{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
         %span{"aria-hidden" => "true"} ×
-      %h2#exampleModalLongTitle.modal-title Scores
+      %h5#exampleModalLongTitle.modal-title Scores
 
     = simple_form_for @question, :url => scores_path+'/'+@question.id.to_s do |f|
       .modal-body
@@ -14,6 +14,23 @@
           = f.simple_fields_for :answers do |answer|
             = answer.input :weight, label: answer.object.text
 
+        %hr
+        %h4 Select Correct option
+        .dependency_editor{style: "padding-left: 19px;"}
+          - if f.object.pick == "one"
+            = f.input_field :correct_answer_id, :collection => Answer.where('question_id=?',@question.id).map{|a| [a.text,a.id]}, :as => :radio_buttons
+          - else
+            = f.collection_check_boxes(:correct_answer_id,checkbox_true(@question.id), :id, :text) do |_data|
+              - if checkbox_values(f.object.correct_answer_id).include?(_data.object.id)
+                %span.radio
+                  = _data.check_box(checked: true) 
+                  = _data.label(class: "check_box")
+              - else
+                %span.radio
+                  = _data.check_box(checked: false)
+                  = _data.label(class: "check_box")
+
+        %br
         .dependency_editor
 
           %ul.nav.nav-tabs{:role => "tablist"}
@@ -32,3 +49,11 @@
       .modal-footer
         = f.button :submit,  'Save Changes',  data: { "ajax-target" => "#question_#{@question_target.id}", "ajax-handler" => 'logicAddHandler', "ajax-error-handler" => "modalErrorHandler", "ajax-error-target" => "#modal", disable_with: "Please wait..." }
         %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+
+:css
+  .modal-header h5{
+    margin-bottom:0 !important;
+    font-weight: 600;
+    margin-left: 5px;
+    font-size: 18px;
+  }

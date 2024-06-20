@@ -3,14 +3,14 @@ PermittedParams.class_eval do
     strong_parameters.permit(*column_attributes)
   end
   def column_attributes
-    [:id, :text, :question_group_id, :answers_textbox]
+    [:id, :text, :question_group_id, :answers_textbox,:topic_id, :lesson_id, :course_id]
   end
 end
 
 module ParamDecorator
   def survey_attributes
     super +
-      [:title, :access_code, :template, :id, :user_id, :internal_title,
+      [:title, :topic_id, :access_code, :template, :id, :user_id, :internal_title,
        :quiz, :public, survey_sections_attributes: survey_section_attributes]
   end
 
@@ -22,9 +22,9 @@ module ParamDecorator
 
   def question_group_attributes
     super +
-      [:id, :question_type, :question_type_id, :question_id, :survey_section_id, :is_mandatory, :prev_question_id,
-       columns_attributes: column_attributes,
-       dependency_attributes: dependency_attributes,questions_attributes: question_attributes]
+    [:id, :question_type, :question_type_id, :question_id, :survey_section_id, :is_mandatory, :prev_question_id,:topic_id, :lesson_id, :course_id,
+      columns_attributes: column_attributes,
+      dependency_attributes: dependency_attributes,questions_attributes: question_attributes]
   end
 
   def response_set_attributes
@@ -53,7 +53,7 @@ module ParamDecorator
   def question_attributes
     super +
       [:question_type, :question_type_id, :survey_section_id, :question_group_id, :text,
-       :text_adjusted_for_group,
+       :text_adjusted_for_group, :topic_id, :lesson_id, :course_id,
        :pick, :reference_identifier, :display_order, :display_type, :is_mandatory,
        :prefix, :suffix, :decimals, :dependency_attributes, :id,
        :hide_label, :dummy_blob, :dynamically_generate, :dynamic_source,
@@ -67,7 +67,7 @@ module ParamDecorator
   def answer_attributes
     super +
       [:text, :response_class, :display_order, :original_choice, :hide_label,
-       :question_id, :display_type, :data_export_identifier, :_destroy, :id, :is_comment, :comment]
+       :question_id, :display_type, :data_export_identifier, :_destroy, :id, :is_comment, :comment,:topic_id,:course_id,:lesson_id]
   end
 
 end

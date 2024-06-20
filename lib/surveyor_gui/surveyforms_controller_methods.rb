@@ -7,7 +7,7 @@ module SurveyorGui
 
     def index
       context = Surveyform
-      label = "All Surveys"
+      label = "All Quiz"
 
       if params[:template]=='false'
         context = context.where('template = ?', false)
@@ -21,35 +21,33 @@ module SurveyorGui
     end
 
     def new
-      @title = "Create New "+ (params[:template] == 'template'? 'Template' : 'Survey')
+      @title = "Create New "+ (params[:template] == 'template'? 'Quiz' : 'Survey')
       @hide_survey_type = params[:hide_survey_type]
       template = params[:template] == 'template'? true : false
       @surveyform = Surveyform.new(:template=>template)
       @surveyform.survey_sections.build(:title=>'Section 1', :display_order=>0, :modifiable=>true)#.questions.build(:text=>'New question',:pick=>'none',:display_order=>0,:display_type=>'default', :modifiable=>modifiable).answers.build(:text=>'string', :response_class=>'string', :display_order=>1, :template=>true)
       @question_no = 0
+      @topic_id = params[:topic_id]
     end
 
     def edit
       @surveyform = Surveyform.where(:id=>params[:id]).includes(:survey_sections).first
-      @survey_locked=false
+      topic = params[:topic_id].to_i
       #unfortunately, request.referrer does not seem to capture parameters. Need to add explicitly.
       #don't edit the format of a non template survey that has responses. could cause unpredictable results
-      @surveyform.response_sets.where('test_data=?',true).map{|r| r.destroy}
-      if !@surveyform.template && @surveyform.responses.count>0
-        # @survey_locked=true
-        flash.now[:error] = "STOP!! Responses have already been collected for this survey, therefore modifications to anything other than simple text may result in data corruption.  PROCEED WITH CAUTION!!"
-      end
+      # @surveyform.response_sets.where('test_data=?',true).map{|r| r.destroy}
       @title = "Edit "+ (@surveyform.template ? 'Template' : 'Survey')
       @surveyform.survey_sections.build if @surveyform.survey_sections.blank?
       @question_no = 0
       @url = "update"
+      @topic_id = @surveyform.topic_id
     end
 
     def create
-      @surveyform = Surveyform.new(surveyforms_params.merge(user_id: @current_user.nil? ? @current_user : @current_user.id))
+      @surveyform = Surveyform.new(surveyforms_params.merge(topic_id: surveyforms_params[:topic_id], user_id: @current_user.nil? ? @current_user : @current_user.id))
       if @surveyform.save
-        flash[:notice] = "Successfully created survey."
-        @title = "Edit Survey"
+        flash[:notice] = "Quiz Created Successfully."
+        @title = "Edit Quiz"
         @question_no = 0
         redirect_to edit_surveyform_path(@surveyform.id)
       else
@@ -61,8 +59,12 @@ module SurveyorGui
       @title = "Update Survey"
       @surveyform = Surveyform.includes(:survey_sections).find(params[:surveyform][:id])
       if @surveyform.update(surveyforms_params)
-        flash[:notice] = "Successfully updated surveyform."
-        redirect_to edit_surveyform_path(@surveyform.id)
+        if params[:department_id].present?
+          flash[:notice] = "Form updated successfully"
+        else
+          flash[:notice] = "Quiz updated successfully"
+        end
+        redirect_to request.referer
       else
         flash[:error] = "Changes not saved."
         @question_no = 0
@@ -71,7 +73,11 @@ module SurveyorGui
     end
 
     def show
-      @title = "Show Survey"
+      if params[:department_id].present?
+        @title = "Show Form"
+      else
+       @title = "Show Quiz"
+      end
       @survey_locked = true
       @surveyform = Surveyform.find(params[:id])
       @question_no = 0
@@ -81,18 +87,22 @@ module SurveyorGui
       @surveyform = Surveyform.find(params[:id])
 
       if @surveyform.response_sets.count > 0
-        flash[:error] = 'This survey has responses and can not be deleted'
+        redirect_to request.referer
+        if params[:department_id].present?
+          flash[:notice] = 'Form has responses and can not be deleted'
+        else
+          flash[:notice] = 'Quiz has responses and can not be deleted'
+        end
       else
         @surveyform.destroy
-
-        if @surveyform.destroyed?
-          flash[:notice] = "Successfully deleted survey."
+        redirect_to request.referer
+        if params[:department_id].present?
+          flash[:notice] = 'Form Deleted Successfully'
         else
-          flash[:error] = 'Survey could not be deleted.'
+          flash[:notice] = 'Quiz Deleted Successfully'
         end
       end
 
-      redirect_to surveyforms_url
     end
 
     def replace_form
@@ -141,7 +151,7 @@ module SurveyorGui
     end
 
     def paste_section
-      @title="Edit Survey"
+      @title="Edit Quiz"
       @question_no = 0
       if session[:cut_section]
         _continue_paste_section
@@ -223,10 +233,10 @@ module SurveyorGui
       @title = "Clone Survey"
       @surveyform = SurveyCloneFactory.new(params[:id], true).clone
       if @surveyform.save
-        flash[:notice] = "Successfully created survey, questionnaire, or form."
+        flash[:notice] = "Successfully created Quiz."
         redirect_to edit_surveyform_path(@surveyform)
       else
-        flash[:error] = "Could not clone the survey, questionnaire, or form."
+        flash[:error] = "Could not clone the Quiz."
         render :action => 'new'
       end
     end

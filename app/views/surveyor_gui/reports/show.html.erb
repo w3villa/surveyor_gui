@@ -5,26 +5,37 @@
             <h1 class="round-top"><%= @title %></h1>
 
             <%if params[:question_id] || params[:question_group_id] %>
-                <p>
-                    <%= link_to "<< Back to Questions", report_path(@survey) %>
-                </p>
+                <%if params[:course_id] %>
+                    <%= link_to "Back to Questions", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/topic-quiz/edit/#{@survey.id}", class: "btn btn-success mb-4", style: "float: right;"%>
+                <%else %>
+                    <p>
+                        <%= link_to "<< Back to Questions", report_path(@survey) %>
+                    </p>
+                <% end %>
 
                 <button class = 'show_data'  >Show Data</button>
                 <button class = 'hide_data'  >Hide Data</button>
 
                 <%= render 'show_report' %>
             <%else %>
-
+                <%if params[:course_id] %>
+                    <%= link_to "Back to Quiz", "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}/topic-quiz/edit/#{@survey.id}", class: "btn btn-success mb-4", style: "float: right;"%><br>
+                <%else %>
                 <p>
                     <%= link_to "<< Back to Surveys", surveyforms_path %>
                 </p>
+                <% end %>
 
                 <h4>Single Questions</h4>
                 <%@questions.each do |question| %>
                     <% if ([:pick_one,:pick_any,:dropdown,:number,:date,:datetime,:time,:stars,:slider,:grid_one, :grid_any, :grid_dropdown].include?(question.question_type_id) || question.pick == 'one' || question.pick == 'any') && question.question_group.nil? %>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <%= link_to "View Report", report_path(@survey, question_id: question.id), class: "btn btn-primary", style: "float: right;"%>
+                                <%if params[:course_id] %>
+                                <%= link_to "View Report",  quiz_question_reports_path(course_id: params[:course_id], lesson_id: params[:lesson_id], topic_id: params[:topic_id], id: @survey, question_id: question.id), class: "btn btn-primary", style: "float: right;"%>
+                                <% else %>
+                                    <%= link_to "View Report", report_path(@survey, question_id: question.id), class: "btn btn-primary", style: "float: right;"%>
+                                <% end %>
                                 <%= question.text.html_safe %>
                             </div>
                         </div>
@@ -32,7 +43,6 @@
                     <%end %>
                 <%end %>
 
-                <h4>Grid Questions</h4>
                 <%@question_groups.each do |question_group| %>
 
                     <div class="panel panel-default">
@@ -44,7 +54,6 @@
 
                 <%end %>
 
-                <h4>Repeater/Inline Questions</h4>
                 <%@repeater_inline.each do |repeater_inline| %>
 
                     <%repeater_inline.questions.each do |question| %>
