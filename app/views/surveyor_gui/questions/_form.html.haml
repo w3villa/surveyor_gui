@@ -12,6 +12,7 @@
       = f.hidden_field :pick
       = f.hidden_field :modifiable
       = f.hidden_field :question_group_id
+      = f.hidden_field :topic_id ,value: @survey_section.surveyform.topic_id
 
     - if question.is_a? QuestionGroup
 
@@ -23,11 +24,11 @@
         = f.hidden_field :question_id
 
 
-    = f.input :text , :label => "Question", :input_html=>{:size=>'55', value: adjusted_text(question), class: "tinymce"}
+    = f.input :text , :label => "Question * ", :input_html=>{:size=>'55', value: adjusted_text(question), class: "tinymce"}
 
     %span.fl
-      %strong Mandatory?
-    = f.input :is_mandatory, :label => false, :as=>:boolean, :wrapper_html=>{:class=>'fl notfirst'}
+      %strong.mr-4 Mandatory?
+    = f.input :is_mandatory, :label => false, :as=>:boolean, :wrapper_html=>{:class=>'fl notfirst ml-4'}
 
     -# TODO May want to make this an edit in place so can easily assign to nested/child questions...right now can only assign to question group or a standalone question.  This is to support the data visualizations in WSM.
     - if params[:action] == "edit"
@@ -79,6 +80,14 @@
         = f.input :report_code, :label=>'Report Code', :label_html=>{:style=>'width:10em;'},:hint=>'Use this code to uniquely identify application data driven questions for reporting.'
         %br/
     %br/
-  .buttons
+  .buttons.ml-4
     = f.button :submit, 'Save Changes', data: { disable_with: "Please wait..." }, class: "btn btn-primary"
-    = link_to "Cancel", surveyor_gui.edit_surveyform_url(@survey)
+    = link_to "Cancel", surveyor_gui.edit_surveyform_url(@survey), class: "btn btn-danger ml-2"
+
+:css
+  abbr{
+    display:none;
+  }
+  .fl strong{
+    margin-right: 5px;
+  }

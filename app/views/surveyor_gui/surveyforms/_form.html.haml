@@ -1,5 +1,5 @@
 #survey
-  %h3{style: "margin-left: 8px;"}
+  %h3.edit_survey_top_class{style: "margin-left: 8px;"}
     = @title
     -if params[:course_id] && params[:action] == "edit"
       = link_to 'Back', "/companies/courses/#{params[:course_id]}/lessons/#{params[:lesson_id]}/topics/#{params[:topic_id]}", class: 'btn btn-danger pull-right ml-3', style: ' margin-left: 10px;'
@@ -14,7 +14,7 @@
               #{@surveyform.id});", :type => "button", :value => "Preview Report"}/
   
       - if @surveyform.id
-        = link_to "Back To Survey  |  ", surveyor_gui.surveyform_path(@surveyform), class: "btn-link"
+        = link_to "Back To Survey  /  ", surveyor_gui.surveyform_path(@surveyform), class: "btn-link"
       = link_to "View All Surveys", surveyor_gui.surveyforms_path, class: "btn-link"
 
   = simple_form_for [surveyor_gui, @surveyform] do |f|
@@ -32,11 +32,11 @@
       .panel.panel-default
         = f.hidden_field :id
         = f.hidden_field :topic_id,  :value => @topic_id
-        = f.input :title, :required=>true, input_html: { class: "quiz", style: "font-size: 16px;" }
-        = f.input :internal_title
-        = f.input :template, :disabled=>@survey_locked, :label => "Template?"
-        = f.input :quiz, :disabled=>@survey_locked, :label => "Quiz?", input_html: { class: "quiz" }
-        = f.input :public, :disabled=>@survey_locked, :label => "Public?", input_html: { class: "quiz" }
+        = f.input :title, :required=>true, input_html: { class: "quiz", style: "font-size: 16px;margin-left:5px" }
+        = f.input :internal_title, input_html: { style: "font-size: 16px;margin-left:5px" }
+        = f.input :template, :disabled=>@survey_locked, :label => "Template?", input_html: { style: "font-size: 16px;margin-right: 5px" }
+        = f.input :quiz, :disabled=>@survey_locked, :label => "Quiz?", input_html: { style: "font-size: 16px;margin-right: 5px" }
+        = f.input :public, :disabled=>@survey_locked, :label => "Public?", input_html: { style: "font-size: 16px;margin-right: 5px" }
 
         - if @survey_locked
           %p
@@ -55,4 +55,17 @@
                 iframe:true,
                 href: url + '?suppress_header=true&survey_id='+ id,
                 opacity:.3});
+  }
+:css
+  .ui-datepicker{
+    position: absolute;
+    top: 945.984px;
+    left: 403px;
+    z-index: 1;
+    display: block;
+    background: white;
+    padding: 10px;
+  }
+  .ui-datepicker td{
+    padding:5px
   }

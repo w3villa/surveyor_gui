@@ -1,6 +1,6 @@
 <div class="question_group_editor shadebox">
     <%= render "surveyor_gui/partials/url_helpers" %>
-    <h1 ><%= @title %></h1>
+    <h3><%= @title %></h1><hr>
     <%= simple_form_for @question_group do |qg| %>
         <div class = 'questions'>
             <%= qg.error_messages %>

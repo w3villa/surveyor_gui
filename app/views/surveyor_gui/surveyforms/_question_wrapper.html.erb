@@ -29,9 +29,9 @@
 
                 <span class="question_button_bar">
             <% if params[:course_id] %> 
-                <%= link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary"%>
+                <%= link_to "Edit Question",  "/companies/courses/#{params[:course_id]}/lessons/#{ params[:lesson_id]}/topics/#{params[:topic_id]}/quiz/questions/#{ f.object.id}/edit", class: "btn btn-primary", :target=>'_self'%>
             <% else%>
-                <%= link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary" %>
+                <%= link_to "Edit Question", surveyor_gui.edit_question_url(f.object), class: "btn btn-primary", :target=>'_self'%>
             <% end %>
 
 
@@ -82,22 +82,10 @@
             </div>
         </div>
     </fieldset>
-
-    <% if !@survey_locked && (f.object.modifiable?) -%>
-
-        <div class="question_buttons_bottom">
-
-            <%= link_to "Add Question", surveyor_gui.new_question_url(survey_section_id: f.object.survey_section.id, prev_question_id: f.object.id), class: "cut btn btn-primary add-question"  %>
-
-
-
-                <button type="button" id="paste_question" class="btn btn-primary paste-question" style="display: none"
-                        data-question-id="<%=f.object.id%>"
-                >Paste Question</button>
-
-
-
-        </div>
-
-    <% end %>
 <% end %>
+<% end %>
+<style type="text/css">
+    .radio{
+        margin:  1em 0 0 1.5em !important;
+    }
+</style>
