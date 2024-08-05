@@ -18,7 +18,7 @@
         - if renderer==:stars
           - if !params[:rm_id].present?
             = ff.input :float_value, :as => :radio, :collection => [[nil,1],[nil,2],[nil,3],[nil,4],[nil,5]], :include_blank => (renderer != :slider), :input_html => { :disabled => disabled }, wrapper_html: { class: 'star-container' }
-            = ff.hidden_field :answer_id, value: q.answers.first.id, :as => :quiet
+            = ff.hidden_field :answer_id, value: q&.answers&.first&.id, :as => :quiet
             = ff.hidden_field :response_other, class: "dynamic_source", id: current_user.id, value: @response_set.id
             = ff.text_area :text_value, class: "question-text-area", placeholder: "Remarks"
           - if params[:profile_id].present?
